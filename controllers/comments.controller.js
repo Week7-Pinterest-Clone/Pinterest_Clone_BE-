@@ -22,5 +22,19 @@ class CommentsController {
     ({ postId });
     res.status(200).json({ data: findAllComment, msg: "댓글 목록 조회 완료" });
   };
+  updateComment = async (req, res, next) => {
+    const { commentId } = req.params;
+    const { comment } = req.body;
+    const { userId } = res.locals.user;
+
+    const updateComment = await this.commentService.updateComment({
+      commentId,
+      comment,
+      userId,
+    });
+    res.status(200).json({
+      msg: "댓글을 수정하였습니다.",
+    });
+  };
 }
 module.exports = CommentsController;
