@@ -18,6 +18,7 @@ class CommentService {
     const findAllcomment = this.commentRepository.findAllComment({ postId });
     return findAllcomment;
   };
+  //*댓글 수정
   updateComment = async ({ userId, comment, commentId }) => {
     const findComment = await this.commentRepository.findOneComment({
       commentId,
@@ -28,6 +29,16 @@ class CommentService {
         comment,
         commentId,
       });
+  };
+  //*댓글 삭제
+  deleteComment = async ({ commentId, userId }) => {
+    const findOneComment = await this.commentRepository.findOneComment({
+      commentId,
+    });
+    if (findOneComment.userId === userId) {
+      await this.commentRepository.deleteComment;
+      ({ commentId });
+    }
   };
 }
 module.exports = CommentService;
