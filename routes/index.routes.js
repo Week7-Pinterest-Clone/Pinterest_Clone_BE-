@@ -1,8 +1,11 @@
-const express = require("express");
+const express = require('express');
 const indexRouter = express.Router();
-const usersRouter = require("./users.routes");
-//예시 indexRouter.use('/경로',라우터명)
 
-indexRouter.use("/", usersRouter);
+const usersRouter = require('./users.routes');
+const postsRouter = require('./posts.routes');
+
+indexRouter.use('/', usersRouter);
+indexRouter.use('/posts', postsRouter);
+indexRouter.use('/save', postsRouter);
 
 module.exports = indexRouter;
