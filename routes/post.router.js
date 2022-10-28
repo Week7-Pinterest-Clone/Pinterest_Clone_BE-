@@ -17,6 +17,4 @@ router.delete('/:postId', postsController.deletePosts);
 //게시글 저장 (찜하기)
 router.put('/:postId', postsController.savePosts);
 
-
-
 module.exports = router;
