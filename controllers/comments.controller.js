@@ -36,5 +36,11 @@ class CommentsController {
       msg: "댓글을 수정하였습니다.",
     });
   };
+  deleteComment = async (req, res, next) => {
+    const { commentId } = req.params;
+    const { userId } = res.locals.user;
+    await this.commentService.deleteComment({ commentId, userId });
+    res.status(200).json({ msg: "댓글을 삭제했습니다." });
+  };
 }
 module.exports = CommentsController;
