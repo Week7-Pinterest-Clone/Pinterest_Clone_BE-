@@ -38,12 +38,12 @@ class PostService {
 
   //게시글업로드
   createPost = async (userId, title, content, img) => {
-    const createPostData = await this.postRepository.createPost(
-      userId,
-      title,
-      content,
-      img
-    );
+    const createPostData = await this.postRepository.createPost({
+      userId: userId,
+      title: title,
+      content: content,
+      img: img_url,
+    });
     return {
       postId: createPostData.null,
       title: createPostData.title,
