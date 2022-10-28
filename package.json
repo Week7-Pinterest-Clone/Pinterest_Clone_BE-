@@ -20,7 +20,7 @@
     "sequelize-cli": "^6.5.1",
     "sharp": "^0.31.1"
   },
-  "name": "hanghae99week6",
+  "name": "week7-pinterest-clone",
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {
