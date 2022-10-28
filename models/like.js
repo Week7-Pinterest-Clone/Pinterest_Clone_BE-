@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
       });
       this.belongsTo(models.Comment, {
         foreignKey: "commentId",
-        targetKey: "commentId",
+        // targetKey: "commentId",
       });
     }
   }

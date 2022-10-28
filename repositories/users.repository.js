@@ -1,16 +1,16 @@
-const { Users } = require("../models");
+const { User } = require("../models");
 const { Op } = require("sequelize");
 
 class UserRepository {
   /**유저생성 */
   createUser = async ({ email, nickname, password }) => {
-    const createUserData = await Users.create({
+    await User.create({
       email,
       nickname,
       password,
     });
 
-    return createUserData;
+    return;
   };
 
   /**유저 정보 찾아오기
@@ -19,7 +19,7 @@ class UserRepository {
    * @returns 찾은 유저정보
    */
   findUser = async (email, password) => {
-    const user = await Users.findOne({
+    const user = await User.findOne({
       where: {
         [Op.and]: [{ email }, { password }],
       },
@@ -33,7 +33,7 @@ class UserRepository {
    * @returns 찾은 유저정보
    */
   findByEmail = async (email) => {
-    const user = await Users.findOne({
+    const user = await User.findOne({
       where: {
         email,
       },
@@ -42,11 +42,11 @@ class UserRepository {
   };
 
   findById = async (userId) => {
-    await Users.findByPk(userId);
+    await User.findByPk(userId);
   };
 
   updateToken = async (refreshToken, userId) => {
-    await Users.update({ refreshToken }, { where: { userId: userId } });
+    await User.update({ refreshToken }, { where: { userId: userId } });
   };
 }
 

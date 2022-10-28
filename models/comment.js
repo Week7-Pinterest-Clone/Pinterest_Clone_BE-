@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
       });
       this.hasMany(models.Like, {
         foreignKey: "commentId",
-        sourceKey: "commentId",
+        // sourceKey: "commentId",
       });
     }
   }

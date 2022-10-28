@@ -6,6 +6,13 @@ require("dotenv").config();
 module.exports = async (req, res, next) => {
   try {
     const { accessToken, refreshToken } = req.cookies;
+
+    if (!accessToken || !refreshToken) {
+      return res.status(403).send({
+        errorMessage: "로그인이 필요한 기능입니다.",
+      });
+    }
+
     /**검증결과에 따라 true,false가 담김 (type: blooean)*/
     const isAccessTokenValidate = validateAccessToken(accessToken);
     const isRefreshTokenValidate = validateRefreshToken(refreshToken);
