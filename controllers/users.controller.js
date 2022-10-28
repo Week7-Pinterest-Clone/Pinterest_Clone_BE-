@@ -51,10 +51,16 @@ class UsersController {
         throw new InvalidParamsError("입력란을 확인해주세요");
       }
 
-      const { accessToken, refreshToken } = await this.userService.findUser(
-        req,
-        res
+      const { accessToken, refreshToken } = await this.userService.verifiUser(
+        email,
+        password
       );
+      console.log(accessToken);
+      console.log(refreshToken);
+      /**쿠키에 Token전송 */
+      res.cookie("refreshToken", refreshToken);
+      res.cookie("accessToken", accessToken);
+
       return res
         .status(200)
         .json({ accessToken, refreshToken, message: "로그인 성공." });
