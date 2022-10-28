@@ -18,5 +18,16 @@ class CommentService {
     const findAllcomment = this.commentRepository.findAllComment({ postId });
     return findAllcomment;
   };
+  updateComment = async ({ userId, comment, commentId }) => {
+    const findComment = await this.commentRepository.findOneComment({
+      commentId,
+    });
+    if (findComment.userId === userId)
+      await this.commentRepository.updateComment({
+        userId,
+        comment,
+        commentId,
+      });
+  };
 }
 module.exports = CommentService;
