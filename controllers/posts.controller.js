@@ -37,20 +37,21 @@ class PostsController {
     const { userId } = res.locals.user;
 
     await this.postService.deletePosts(postId, userId);
-    res.status(200).send('게시글이 삭제되었습니다');
-    // {
-    //     msg:”삭제되었습니다”
-    //     }
+    res.status(200).send({msg:'게시글이 삭제되었습니다'});
   };
 
   //게시글 저장 (찜하기)
   savePosts = async (req, res, next) => {
-    await this.postService.savePosts();
-    res.status(200).send('게시글저장완료');
+    const {postId} =req.params
+    const {userId} = res.locals.user
+  
+    await this.postService.savePosts({postId, userId})
+    res.status(201).send({msg:'게시글저장완료'});
   };
-  //   {
-  //     msg: “게시글 저장”
-  //     }
+
+  
+
+
 }
 
 module.exports = PostsController;
