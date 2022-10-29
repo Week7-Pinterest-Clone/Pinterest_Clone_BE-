@@ -51,7 +51,7 @@ class UsersController {
         throw new InvalidParamsError("입력란을 확인해주세요");
       }
 
-      const { accessToken, refreshToken } = await this.userService.verifiUser(
+      const { accessToken, refreshToken } = await this.userService.verifyUser(
         email,
         password
       );
@@ -71,7 +71,10 @@ class UsersController {
 
   profile = async (req, res, next) => {
     try {
-      const { userId } = res.locals.user;
+      const { userId } = req.params;
+      const profile = await this.userService.profile(userId);
+
+      res.status(200).json(profile);
     } catch (error) {
       next(error);
     }

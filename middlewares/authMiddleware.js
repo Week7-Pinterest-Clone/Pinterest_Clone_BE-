@@ -6,6 +6,8 @@ require("dotenv").config();
 module.exports = async (req, res, next) => {
   try {
     const { accessToken, refreshToken } = req.cookies;
+    console.log(accessToken);
+    console.log(refreshToken);
 
     if (!accessToken || !refreshToken) {
       return res.status(403).send({
@@ -56,7 +58,7 @@ module.exports = async (req, res, next) => {
       );
 
       /**유저정보 DB에서 찾아오기*/
-      const user = await Users.findByPk(userId);
+      const user = await User.findByPk(userId);
 
       /**새로 발급받은 토큰전송 */
       res.cookie("accessToken", newAccessToken);
@@ -67,7 +69,7 @@ module.exports = async (req, res, next) => {
     } else {
       /**토큰이 모두 유효한 경우 */
       const { userId } = jwt.verify(accessToken, process.env.SECRET_KEY);
-      const user = await Users.findByPk(userId);
+      const user = await User.findByPk(userId);
       res.locals.user = user;
     }
 
@@ -75,7 +77,7 @@ module.exports = async (req, res, next) => {
   } catch (error) {
     console.trace(error);
     return res.status(403).send({
-      errorMessage: "로그인이 필요한 기능입니다.",
+      errorMessage: "로그인이 필요합니다.",
     });
   }
 };
