@@ -1,9 +1,8 @@
 const CommentService = require("../services/comments.service");
 const InvalidParamsError = require("../exceptions/index.exception");
 class CommentController {
-  constructor() {
-    commentService = new CommentService();
-  }
+  commentService = new CommentService();
+
   createComment = async (req, res, next) => {
     const { comment } = req.body;
     const { postId } = req.params;
@@ -18,29 +17,34 @@ class CommentController {
   };
   findAllComment = async (req, res, next) => {
     const { postId } = req.params;
-    const findAllComment = await this.commentService.findAllComment;
-    ({ postId });
-    res.status(200).json({ data: findAllComment, msg: "댓글 목록 조회 완료" });
+
+    const comment = await this.commentService.findAllComment({
+      postId,
+    });
+    console.log(comment);
+    res.status(200).json({ data: comment, massage: "댓글 목록 조회 완료" });
   };
   updateComment = async (req, res, next) => {
     const { commentId } = req.params;
     const { comment } = req.body;
     const { userId } = res.locals.user;
 
-    const updateComment = await this.commentService.updateComment({
+    const fcomment = await this.commentService.updateComment({
       commentId,
       comment,
       userId,
     });
-    res.status(200).json({
-      msg: "댓글을 수정하였습니다.",
-    });
+    res.status(200).json({ data: fcomment, massage: "댓글을 수정하였습니다." });
   };
   deleteComment = async (req, res, next) => {
     const { commentId } = req.params;
     const { userId } = res.locals.user;
-    await this.commentService.deleteComment({ commentId, userId });
-    res.status(200).json({ msg: "댓글을 삭제했습니다." });
+    const comment = await this.commentService.deleteComment({
+      commentId,
+      userId,
+    });
+    console.log(comment);
+    res.status(200).json({ data: comment, msg: "댓글을 삭제했습니다." });
   };
 }
 module.exports = CommentController;
