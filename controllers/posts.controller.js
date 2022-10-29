@@ -16,19 +16,19 @@ class PostsController {
 
     res.status(200).json({ data: postsOne });
   };
-  
+
   //게시글업로드
   createPosts = async (req, res, next) => {
-    const { userId } = res.locals.user;
-    const { title, content, img } = req.body;
-
-    const createPostData = await this.postService.createPosts(
+    const { userId} = res.locals.user;
+    const { title, content } = req.body;
+    console.log("컨트롤러")
+    console.log(title, content)
+    await this.postService.createPosts(
       userId,
       title,
       content,
-      img
     );
-    res.status(201).json({ data: createPostData });
+    res.status(201).json({msg:'업로드완료'});
   };
 
   //게시글 삭제

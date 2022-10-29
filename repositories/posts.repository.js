@@ -1,33 +1,36 @@
-const { Post } = require('../models');
+const { Post, User} = require('../models');
 
 class PostRepository {
   //게시글전체조회
   findAllPost = async () => {
-    const allPost = await Post.findAll();
+    const allPost = await Post.findAll({
+      include: { model: User },
+    });
 
     return allPost;
   };
   //게시글상세조회
   findOnePost = async (postId) => {
-    const postsOne = await Post.findByPk(postId);
+    const postsOne = await Post.findOne({where:{postId},
+        include:[{model:User}]})
 
     return postsOne;
   };
   //게시글업로드
-  createPost = async (userId, nickname, title, content, like) => {
-    const createPostData = await Post.create({
+  createPosts = async (userId, title, content) => {
+    console.log('레포지토리');
+    console.log(title, content);
+    await Post.create({
       userId,
-      nickname,
       title,
       content,
-      like,
     });
 
-    return createPostData;
+    return;
   };
 
   //게시글 삭제
-  deletePost = async (postId, userId) => {
+  deletePosts = async (postId, userId) => {
     const deletePost = Post.destroy({
       where: { postId, userId },
     });
@@ -37,9 +40,17 @@ class PostRepository {
 
   //게시글 저장 (찜하기)
   savePosts = async (userId) => {
-    const savePosts = Post.update({ img }, { where: { userId } });
-    
+    const savePosts = Save.update({ img }, { where: { userId }});
+
     return savePosts;
+  };
+
+  savePosts = async (req, res, next) => {
+    const {postId} =req.params
+    const {userId} = res.locals.user
+    const savePosts = await this.postService.savePosts({postId, userId})
+
+    res.status(201).json({data: savePosts})
   };
 }
 

@@ -13,11 +13,10 @@ class PostService {
     return allPost.map((post) => {
       return {
         postId: post.postId,
-        nickname: post.nickname,
+        nickname: post.User.nickname,
         title: post.title,
         createdAt: post.createdAt,
         updatedAt: post.updatedAt,
-        likesCount: post.likesCount,
       };
     });
   };
@@ -25,38 +24,28 @@ class PostService {
   //게시글상세조회
   findOnePost = async (postId) => {
     const postsOne = await this.postRepository.findOnePost(postId);
-
+    console.log(postsOne);
     return {
       postId: postsOne.postId,
-      nickname: postsOne.nickname,
       title: postsOne.title,
       content: postsOne.content,
+      nickname: postsOne.User.nickname,
       createdAt: postsOne.createdAt,
       updatedAt: postsOne.updatedAt,
     };
   };
 
   //게시글업로드
-  createPost = async (userId, title, content, img) => {
-    const createPostData = await this.postRepository.createPost({
-      userId: userId,
-      title: title,
-      content: content,
-      img: img_url,
-    });
-    return {
-      postId: createPostData.null,
-      title: createPostData.title,
-      content: createPostData.content,
-      createdAt: createPostData.createdAt,
-      updatedAt: createPostData.updatedAt,
-    };
+  createPosts = async (userId, title, content) => {
+    console.log('서비스');
+    console.log(title, content);
+    await this.postRepository.createPosts(userId, title, content);
   };
 
   //게시글 삭제
-  deletePost = async (postId, userId) => {
+  deletePosts = async (postId, userId) => {
     try {
-      const deletePost = await this.postRepository.deletePost(postId, userId);
+      const deletePost = await this.postRepository.deletePosts(postId, userId);
       return {
         postId: deletePost.postId,
       };
