@@ -31,6 +31,10 @@ class LikeRepository extends Like {
     );
     return downLike;
   };
-  likeCount = async({});
+  //*좋아요 count 가져오기
+  likeCount = async ({ commentId }) => {
+    const likeCount = await Comment.findOne({ where: { commentId } });
+    return likeCount;
+  };
 }
 module.exports = LikeRepository;
