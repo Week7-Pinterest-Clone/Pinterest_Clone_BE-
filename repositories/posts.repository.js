@@ -1,4 +1,4 @@
-const { Post, User} = require('../models');
+const { Post, User, Save } = require('../models');
 
 class PostRepository {
   //게시글전체조회
@@ -11,8 +11,10 @@ class PostRepository {
   };
   //게시글상세조회
   findOnePost = async (postId) => {
-    const postsOne = await Post.findOne({where:{postId},
-        include:[{model:User}]})
+    const postsOne = await Post.findOne({
+      where: { postId },
+      include: [{ model: User }],
+    });
 
     return postsOne;
   };
@@ -37,18 +39,20 @@ class PostRepository {
   };
 
   //게시글 저장 (찜하기)
-  savePosts = async (userId) => {
-    const savePosts = Save.update({ img }, { where: { userId }});
 
-    return savePosts;
+  findSave = async ({ postId, userId }) => {
+    const findSave = await Save.findOne({ where: { userId, postId } });
+    console.log('레포지토리');
+    console.log(postId, userId);
+    return findSave;
   };
-
-  savePosts = async (req, res, next) => {
-    const {postId} =req.params
-    const {userId} = res.locals.user
-    const savePosts = await this.postService.savePosts({postId, userId})
-
-    res.status(201).json({data: savePosts})
+  createSave = async (postId, userId) => {
+    await Save.create({ userId: userId, postId: postId });
+    console.log('크리에이트세이브')
+    console.log(postId, userId)
+  };
+  destroysave = async (postId, userId) => {
+    await Save.destroy({ where: { postId: postId, userId: userId } });
   };
 }
 

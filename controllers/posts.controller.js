@@ -40,11 +40,13 @@ class PostsController {
 
   //게시글 저장 (찜하기)
   savePosts = async (req, res, next) => {
+    // console.log('컨트롤러');
+    // console.log(findSave);
     const {postId} =req.params
     const {userId} = res.locals.user
-    await this.postService.savePosts({postId, userId})
+    const resultmsg = await this.postService.savePosts({postId, userId})
 
-    res.status(201).send({msg:'게시글저장완료'});
+    res.status(201).send(resultmsg);
   };
 
   

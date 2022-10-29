@@ -24,7 +24,6 @@ class PostService {
   //게시글상세조회
   findOnePost = async (postId) => {
     const postsOne = await this.postRepository.findOnePost(postId);
-    console.log(postsOne);
     return {
       postId: postsOne.postId,
       title: postsOne.title,
@@ -37,8 +36,6 @@ class PostService {
 
   //게시글업로드
   createPosts = async (userId, title, content) => {
-    console.log('서비스');
-    console.log(title, content);
     await this.postRepository.createPosts(userId, title, content);
   };
 
@@ -58,17 +55,16 @@ class PostService {
   };
 
   //게시글 저장 (찜하기)
-  savePosts = async () => {
-    try {
-      const savePosts = await this.postRepository.savePosts();
-      return {
-        postId: savePosts.postId,
-      };
-    } catch (error) {
-      return {
-        msg: '게시글저장에 실패했습니다',
-        status: 400,
-      };
+  savePosts = async ({ postId, userId }) => {
+    const findSave = await this.postRepository.findSave({ postId, userId });
+    // console.log('서비스');
+    // console.log(findSave);
+    if (!findSave) {
+      await this.postRepository.createSave(postId, userId);
+      return { msg: '게시글이 저장되었습니다' };
+    } else {
+      await this.postRepository.destroysave(postId, userId);
+      return { msg: '게시글 저장이 취소되었습니다' };
     }
   };
 }
