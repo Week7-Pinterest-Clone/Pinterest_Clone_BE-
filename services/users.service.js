@@ -29,7 +29,7 @@ class UserService {
     return;
   };
 
-  verifiUser = async (email, password) => {
+  verifyUser = async (email, password) => {
     //로그인 요청이메일이 db에 존재하는지 확인
     const user = await this.userRepository.findByEmail(email);
 
@@ -56,6 +56,17 @@ class UserService {
     });
 
     return { accessToken, refreshToken };
+  };
+
+  profile = async (userId) => {
+    const user = await this.userRepository.findById(userId);
+
+    return {
+      nickname: user.nickname,
+      email: user.email,
+      avatar: user.userImg,
+      post: [],
+    };
   };
 }
 

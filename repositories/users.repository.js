@@ -42,7 +42,8 @@ class UserRepository {
   };
 
   findById = async (userId) => {
-    await User.findByPk(userId);
+    const user = await User.findByPk(userId);
+    return user;
   };
 
   updateToken = async (refreshToken, userId) => {
