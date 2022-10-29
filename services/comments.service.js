@@ -15,7 +15,9 @@ class CommentService {
   };
   //*댓글조회
   findAllComment = async ({ postId }) => {
-    const findAllcomment = this.commentRepository.findAllComment({ postId });
+    const findAllcomment = this.commentRepository.findAllComment({
+      postId,
+    });
     return findAllcomment;
   };
   //*댓글 수정
@@ -23,8 +25,9 @@ class CommentService {
     const findComment = await this.commentRepository.findOneComment({
       commentId,
     });
+    console.log(findComment);
     if (findComment.userId === userId)
-      await this.commentRepository.updateComment({
+      return await this.commentRepository.updateComment({
         userId,
         comment,
         commentId,
@@ -36,8 +39,7 @@ class CommentService {
       commentId,
     });
     if (findOneComment.userId === userId) {
-      await this.commentRepository.deleteComment;
-      ({ commentId });
+      return await this.commentRepository.deleteComment({ commentId });
     }
   };
 }
