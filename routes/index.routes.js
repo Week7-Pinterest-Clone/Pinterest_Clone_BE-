@@ -1,11 +1,11 @@
 const express = require('express');
-const indexRouter = express.Router();
+const router = express.Router();
 const usersRouter = require('./users.routes');
 const postsRouter = require('./posts.routes');
 
-indexRouter.use("/users", usersRouter);
-indexRouter.use('/posts', postsRouter);
-indexRouter.use('/save', postsRouter);
+router.use("/users", usersRouter);
+router.use('/posts', postsRouter);
+router.use('/save', postsRouter);
 
 
 module.exports = indexRouter;

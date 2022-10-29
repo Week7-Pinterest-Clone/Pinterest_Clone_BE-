@@ -8,6 +8,7 @@ class PostsController {
     const allPost = await this.postService.findAllPost();
     res.status(200).json({ data: allPost });
   };
+
   //게시글 상세조회
   getOnePosts = async (req, res, next) => {
     const postId = req.params.postId;
@@ -15,6 +16,7 @@ class PostsController {
 
     res.status(200).json({ data: postsOne });
   };
+  
   //게시글업로드
   createPosts = async (req, res, next) => {
     const { userId } = res.locals.user;
