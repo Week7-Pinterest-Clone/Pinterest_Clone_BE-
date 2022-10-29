@@ -11,11 +11,18 @@ class LikeRepository extends Like {
     return createLike;
   };
   //*좋아요 on/off
-  upLike = async ({ userId, commentId, isLike }) => {
+  upLike = async ({ commentId }) => {
     const upLike = await Comment.increment(
       { likeCount: 1 },
-      { where: { userId, commentId } }
+      { where: { commentId } }
     );
     return upLike;
+  };
+  downLike = async ({ commentId }) => {
+    const downLike = await Comment.increment(
+      { likeCount: -1 },
+      { where: { commentId } }
+    );
+    return downLike;
   };
 }
