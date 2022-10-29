@@ -1,6 +1,6 @@
 const CommentService = require("../services/comments.service");
-const errorHandler = require("../middlewares/error-handler.middleware");
-class CommentsController {
+const InvalidParamsError = require("../exceptions/index.exception");
+class CommentController {
   constructor() {
     commentService = new CommentService();
   }
@@ -10,7 +10,7 @@ class CommentsController {
     const { userId } = res.locals.user;
 
     if (!comment) {
-      throw new errorHandler("댓글 내용을 입력해주세요");
+      throw new InvalidParamsError("댓글 내용을 입력해주세요");
     }
     await this.commentService.createComment({ comment, postId, userId });
 
@@ -43,4 +43,4 @@ class CommentsController {
     res.status(200).json({ msg: "댓글을 삭제했습니다." });
   };
 }
-module.exports = CommentsController;
+module.exports = CommentController;
