@@ -11,9 +11,14 @@ class LikeRepository extends Like {
     return findLike;
   };
   //*좋아요 만들기
-  createLike = async ({ userId, commentId, isLike }) => {
-    const createLike = await Like.create({ userId, commentId, isLike });
+  createLike = async ({ userId, commentId }) => {
+    const createLike = await Like.create({ userId, commentId });
     return createLike;
+  };
+  //*좋아요 취소
+  destroyLike = async ({ userId, commentId }) => {
+    const destroyLike = await Like.destroy({ where: { userId, commentId } });
+    return destroyLike;
   };
   //*좋아요 on
   upLike = async ({ commentId }) => {
