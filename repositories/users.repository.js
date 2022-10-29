@@ -1,4 +1,4 @@
-const { User } = require("../models");
+const { User, Post } = require("../models");
 const { Op } = require("sequelize");
 
 class UserRepository {
@@ -42,7 +42,10 @@ class UserRepository {
   };
 
   findById = async (userId) => {
-    const user = await User.findByPk(userId);
+    const user = await User.findOne({
+      where: { userId: userId },
+      include: { model: Post },
+    });
     return user;
   };
 

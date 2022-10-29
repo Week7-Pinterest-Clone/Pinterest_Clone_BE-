@@ -60,12 +60,14 @@ class UserService {
 
   profile = async (userId) => {
     const user = await this.userRepository.findById(userId);
+    // console.log("hhhhhhhhhhhhhhhhhhhere");
+    // console.log(user.Post);
 
     return {
       nickname: user.nickname,
       email: user.email,
       avatar: user.userImg,
-      post: [],
+      post: user.Posts,
     };
   };
 }

@@ -33,14 +33,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/MoonJongHyeon1095/hanghae99week6.git"
+    "url": "git+https://github.com/Week7-Pinterest-Clone/Pinterest_Clone_BE.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/MoonJongHyeon1095/hanghae99week6/issues"
+    "url": "https://github.com/Week7-Pinterest-Clone/Pinterest_Clone_BE.git"
   },
-  "homepage": "https://github.com/MoonJongHyeon1095/hanghae99week6#readme",
+  "homepage": "https://github.com/Week7-Pinterest-Clone/Pinterest_Clone_BE.git",
   "description": "",
   "devDependencies": {
     "jest": "^29.2.2",
