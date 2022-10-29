@@ -18,13 +18,13 @@ module.exports = (sequelize, DataTypes) => {
       });
       this.hasMany(models.Like, {
         foreignKey: "commentId",
-        // sourceKey: "commentId",
+        sourceKey: "commentId",
       });
     }
   }
   Comment.init(
     {
-      commentid: {
+      commentId: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
@@ -53,7 +53,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       likeCount: {
         type: DataTypes.INTEGER,
-        defaltValue : 0,
+        defaultValue: 0,
       },
       createdAt: {
         allowNull: false,
