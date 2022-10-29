@@ -21,14 +21,12 @@ class PostsController {
   createPosts = async (req, res, next) => {
     const { userId} = res.locals.user;
     const { title, content } = req.body;
-    console.log("컨트롤러")
-    console.log(title, content)
     await this.postService.createPosts(
       userId,
       title,
       content,
     );
-    res.status(201).json({msg:'업로드완료'});
+    res.status(201).json({msg:'게시글업로드완료'});
   };
 
   //게시글 삭제
@@ -44,8 +42,8 @@ class PostsController {
   savePosts = async (req, res, next) => {
     const {postId} =req.params
     const {userId} = res.locals.user
-  
     await this.postService.savePosts({postId, userId})
+
     res.status(201).send({msg:'게시글저장완료'});
   };
 

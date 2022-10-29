@@ -18,8 +18,6 @@ class PostRepository {
   };
   //게시글업로드
   createPosts = async (userId, title, content) => {
-    console.log('레포지토리');
-    console.log(title, content);
     await Post.create({
       userId,
       title,
