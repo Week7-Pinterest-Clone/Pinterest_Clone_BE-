@@ -41,24 +41,20 @@ class PostService {
 
   //게시글 삭제
   deletePosts = async (postId, userId) => {
-    try {
-      const deletePost = await this.postRepository.deletePosts(postId, userId);
-      return {
-        postId: deletePost.postId,
-      };
-    } catch (e) {
-      return {
-        msg: '게시글 삭제에 실패했습니다',
-        status: 400,
-      };
-    }
+    const findByauthor = await this.postRepository.findOnePost(postId);
+    if (!findByauthor) throw new Error('잘못된 요청입니다');
+    if (findByauthor.userId !== userId)
+      throw new Error('본인만 삭제할 수 있습니다');
+
+    const deletePost = await this.postRepository.deletePosts(postId);
+    return {
+      postId: deletePost.postId,
+    };
   };
 
   //게시글 저장 (찜하기)
   savePosts = async ({ postId, userId }) => {
     const findSave = await this.postRepository.findSave({ postId, userId });
-    // console.log('서비스');
-    // console.log(findSave);
     if (!findSave) {
       await this.postRepository.createSave(postId, userId);
       return { msg: '게시글이 저장되었습니다' };
