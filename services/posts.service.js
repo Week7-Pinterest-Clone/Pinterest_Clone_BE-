@@ -26,9 +26,11 @@ class PostService {
     const postsOne = await this.postRepository.findOnePost(postId);
     return {
       postId: postsOne.postId,
+      userId: postsOne.userId,
       title: postsOne.title,
       content: postsOne.content,
       nickname: postsOne.User.nickname,
+      postImg:postsOne.postImg,
       createdAt: postsOne.createdAt,
       updatedAt: postsOne.updatedAt,
     };

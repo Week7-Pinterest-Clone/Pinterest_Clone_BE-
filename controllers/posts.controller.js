@@ -19,7 +19,7 @@ class PostsController {
 
   //게시글업로드
   createPosts = async (req, res, next) => {
-    const { userId} = res.locals.user;
+    const { userId } = res.locals.user;
     const { title, content } = req.body;
     await this.postService.createPosts(
       userId,
