@@ -1,4 +1,4 @@
-const { Post, User, Save } = require('../models');
+const { Post, User, Save } = require("../models");
 
 class PostRepository {
   //게시글전체조회
@@ -42,11 +42,11 @@ class PostRepository {
 
   findSave = async ({ postId, userId }) => {
     const findSave = await Save.findOne({ where: { userId, postId } });
-
     return findSave;
   };
   createSave = async (postId, userId) => {
-    await Save.create({ userId: userId, postId: postId });
+    const savedAt = new Date();
+    await Save.create({ userId: userId, postId: postId, savedAt: savedAt });
   };
   destroysave = async (postId, userId) => {
     await Save.destroy({ where: { postId: postId, userId: userId } });
