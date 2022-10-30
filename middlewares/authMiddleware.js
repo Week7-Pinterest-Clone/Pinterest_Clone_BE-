@@ -6,8 +6,6 @@ require("dotenv").config();
 module.exports = async (req, res, next) => {
   try {
     const { accessToken, refreshToken } = req.cookies;
-    console.log(accessToken);
-    console.log(refreshToken);
 
     if (!accessToken || !refreshToken) {
       return res.status(403).send({

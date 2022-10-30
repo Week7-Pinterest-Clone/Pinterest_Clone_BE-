@@ -1,4 +1,4 @@
-const { User } = require("../models");
+const { User, Post, Save } = require("../models");
 const { Op } = require("sequelize");
 
 class UserRepository {
@@ -9,7 +9,6 @@ class UserRepository {
       nickname,
       password,
     });
-
     return;
   };
 
@@ -42,8 +41,18 @@ class UserRepository {
   };
 
   findById = async (userId) => {
-    const user = await User.findByPk(userId);
-    return user;
+    const profileData = await User.findOne({
+      where: { userId: userId },
+      include: [
+        {
+          model: Save,
+          order: [["savedAt", "ASC"]],
+          include: [{ model: Post }],
+        },
+      ],
+    });
+    console.log(profileData);
+    return profileData;
   };
 
   updateToken = async (refreshToken, userId) => {

@@ -61,11 +61,13 @@ class UserService {
   profile = async (userId) => {
     const user = await this.userRepository.findById(userId);
 
+    const posts = user.Saves.map((x) => x.Post);
+
     return {
       nickname: user.nickname,
       email: user.email,
       avatar: user.userImg,
-      post: [],
+      post: posts,
     };
   };
 }
