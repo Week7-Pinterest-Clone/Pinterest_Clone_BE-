@@ -11,11 +11,12 @@ class PostRepository {
   };
   //게시글상세조회
   findOnePost = async (postId) => {
+
     const postsOne = await Post.findOne({
       where: { postId },
       include: [{ model: User }],
     });
-
+    console.log(postsOne)
     return postsOne;
   };
   //게시글업로드
@@ -25,14 +26,13 @@ class PostRepository {
       title,
       content,
     });
-
     return;
   };
 
   //게시글 삭제
-  deletePosts = async (postId, userId) => {
+  deletePosts = async (postId) => {
     const deletePost = Post.destroy({
-      where: { postId, userId },
+      where: { postId },
     });
 
     return deletePost;
@@ -42,13 +42,11 @@ class PostRepository {
 
   findSave = async ({ postId, userId }) => {
     const findSave = await Save.findOne({ where: { userId, postId } });
-    console.log(postId, userId);
     return findSave;
   };
   createSave = async (postId, userId) => {
     const savedAt = new Date();
     await Save.create({ userId: userId, postId: postId, savedAt: savedAt });
-    console.log(postId, userId);
   };
   destroysave = async (postId, userId) => {
     await Save.destroy({ where: { postId: postId, userId: userId } });

@@ -6,7 +6,7 @@ class LikeService {
   //*좋아요 찾기
   findLike = async ({ userId, commentId }) => {
     const like = await this.likeRepository.findLike({ userId, commentId });
-    return findLike;
+    return like;
   };
   //*좋아요
   createLike = async ({ userId, commentId }) => {
@@ -24,11 +24,12 @@ class LikeService {
       await this.likeRepository.destroyLike({ userId, commentId });
       await this.likeRepository.downLike({ commentId });
     }
-    return destroyLike;
+    return like;
   };
   //*좋아요 카운트
   likeCount = async ({ commentId }) => {
-    const likeCount = await this.likeRepository.likeCount({ commentId });
+    let likeCount = await this.likeRepository.likeCount({ commentId });
+    likeCount = likeCount.likeCount;
     return likeCount;
   };
 }
