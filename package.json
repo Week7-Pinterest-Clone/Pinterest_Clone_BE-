@@ -32,15 +32,11 @@
     "test:integration": "NODE_ENV=test jest test/integration --forceExit"
   },
   "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Week7-Pinterest-Clone/Pinterest_Clone_BE.git"
+    "type": "git"
   },
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Week7-Pinterest-Clone/Pinterest_Clone_BE.git"
-  },
-  "homepage": "https://github.com/Week7-Pinterest-Clone/Pinterest_Clone_BE.git",
+  "bugs": {},
   "description": "",
   "devDependencies": {
     "jest": "^29.2.2",

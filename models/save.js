@@ -1,5 +1,6 @@
 "use strict";
 const { Model } = require("sequelize");
+const { Sequelize } = require(".");
 module.exports = (sequelize, DataTypes) => {
   class Save extends Model {
     /**
@@ -43,10 +44,15 @@ module.exports = (sequelize, DataTypes) => {
           key: "userId",
         },
       },
+      savedAt: {
+        allowNull: false,
+        type: DataTypes.DATE,
+      },
     },
     {
       sequelize,
       modelName: "Save",
+      timestamps: false,
     }
   );
   return Save;
