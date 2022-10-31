@@ -1,3 +1,4 @@
+const { ValidationError } = require("sequelize");
 const CommentRepository = require("../repositories/comments.repository");
 
 class CommentService {
@@ -13,19 +14,16 @@ class CommentService {
     });
     return createComment;
   };
-  //*댓글조회
-  findAllComment = async ({ postId }) => {
-    const findAllcomment = this.commentRepository.findAllComment({
-      postId,
-    });
-    return findAllcomment;
-  };
+
   //*댓글 수정
   updateComment = async ({ userId, comment, commentId }) => {
     const findComment = await this.commentRepository.findOneComment({
       commentId,
     });
     console.log(findComment);
+    if (!findComment) {
+      throw new ValidationError("잘못된 요청입니다.");
+    }
     if (findComment.userId === userId)
       return await this.commentRepository.updateComment({
         userId,
@@ -38,6 +36,9 @@ class CommentService {
     const findOneComment = await this.commentRepository.findOneComment({
       commentId,
     });
+    if (findOneComment) {
+      throw new ValidationError("잘못된 요청입니다.");
+    }
     if (findOneComment.userId === userId) {
       return await this.commentRepository.deleteComment({ commentId });
     }

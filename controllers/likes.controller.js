@@ -10,7 +10,7 @@ class LikeController {
       const { userId } = res.locals.user;
       const { commentId } = req.params;
       if (!userId || !commentId) {
-        throw new InvalidParamsError("");
+        throw new InvalidParamsError("잘못된 요청입니다.");
       }
       const findLike = await this.likeService.findLike({ userId, commentId });
       if (!findLike) {
@@ -21,7 +21,7 @@ class LikeController {
         const likeCount = await this.likeService.likeCount({ commentId });
         return res
           .status(201)
-          .json({ data: likeCount, msg: "좋아요 등록완료" });
+          .json({ createLike, data: likeCount, msg: "좋아요 등록완료" });
       }
       if (findLike) {
         const destroyLike = await this.likeService.destroyLike({
@@ -31,7 +31,7 @@ class LikeController {
         const likeCount = await this.likeService.likeCount({ commentId });
         return res
           .status(200)
-          .json({ data: likeCount, msg: "좋아요 등록취소" });
+          .json({ destroyLike, data: likeCount, msg: "좋아요 등록취소" });
       }
     } catch (error) {
       next(error);

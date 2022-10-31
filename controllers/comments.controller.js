@@ -15,15 +15,7 @@ class CommentController {
 
     res.status(201).json({ msg: "댓글을 작성하였습니다." });
   };
-  findAllComment = async (req, res, next) => {
-    const { postId } = req.params;
 
-    const comment = await this.commentService.findAllComment({
-      postId,
-    });
-    console.log(comment);
-    res.status(200).json({ data: comment, massage: "댓글 목록 조회 완료" });
-  };
   updateComment = async (req, res, next) => {
     const { commentId } = req.params;
     const { comment } = req.body;

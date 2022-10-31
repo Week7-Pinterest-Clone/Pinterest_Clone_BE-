@@ -18,18 +18,7 @@ class CommentRepository extends Comment {
     const comments = await Comment.findOne({ where: { commentId } });
     return comments;
   };
-  //*댓글조회
-  findAllComment = async ({ postId }) => {
-    const findAllComment = await Comment.findAll({
-      where: { postId },
-      include: [
-        {
-          model: User,
-        },
-      ],
-    });
-    return findAllComment;
-  };
+
   //*댓글수정
   updateComment = async ({ userId, comment, commentId }) => {
     const updateComment = await Comment.update(
