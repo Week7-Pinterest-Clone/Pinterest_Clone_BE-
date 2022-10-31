@@ -2,7 +2,6 @@ const ImageService = require("../services/images.service");
 const PostsService = require("../services/posts.service");
 const UserService = require("../services/users.service")
 const aws = require("aws-sdk");
-//const sharp = require("sharp");
 require("dotenv").config();
 
 class ImagesController {
@@ -28,7 +27,7 @@ class ImagesController {
       console.log(imageUrl, "벨류벨류")
 
       if (!image) {
-        res.status(400).send({ message: "이미지가 없다." });
+        res.status(400).send({ message: "이미지를 추가해 주세요." });
         return;
       }
       res.status(200).json({msg:"이미지 업로드 완료!", userimg: imageUrl });
@@ -43,9 +42,7 @@ class ImagesController {
   uploadImages = async (req, res, next) => {
     const { userId } = res.locals.user;
     const { postId } = req.params;
-    //console.log(postId);
     const findPost = await this.postsService.findOnePost(postId);
-    //console.log(findPost);
     if (userId !== findPost.userId) {
       return res.status(400).json({ errorMessage: "권한이 없습니다." });
     }
@@ -53,28 +50,13 @@ class ImagesController {
       const images = req.files;
       const values = Object.values({images})
       const imageUrls = values[0][0].transforms[0].location
-
-      // const imageUrls = images.map((img) => img.location);
-      //console.log(images, "불러봅시다")
       console.log(imageUrls, "벨류벨류")
 
 
       if (!images) {
-        res.status(400).send({ message: "이미지가 없다." });
+        res.status(400).send({ message: "이미지를 추가해 주세요." });
         return;
       }
-
-      // sharp(imageUrls)  // 압축할 이미지 경로
-      // .resize({ width: 600 }) // 비율을 유지하며 가로 크기 줄이기
-      // .withMetadata()	// 이미지의 exif데이터 유지
-      // .toBuffer((err, buffer) => {
-      //   if (err) throw err;
-      //   // 압축된 파일 새로 저장(덮어씌우기)
-      //   fs.writeFile(imageUrls, buffer, (err) => {
-      //     if (err) throw err;
-      //   });
-      // });
-
 
       await this.imageService.uploadImages(imageUrls, userId, postId);
 
