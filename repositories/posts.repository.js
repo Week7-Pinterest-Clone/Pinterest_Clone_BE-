@@ -13,8 +13,12 @@ class PostRepository {
   findOnePost = async (postId) => {
 
     const postsOne = await Post.findOne({
-      where: { postId },
-      include: [{ model: User }],
+      where: { postId, commentId },
+      include: [
+        {
+           model: User,
+           include: [{ model: Comment }],
+          }],
     });
     return postsOne;
   };
