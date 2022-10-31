@@ -1,4 +1,6 @@
 const PostService = require("../services/posts.service");
+const aws = require("aws-sdk");
+require("dotenv").config();
 
 class PostsController {
   postService = new PostService();
@@ -49,13 +51,41 @@ class PostsController {
     try {
       const { postId } = req.params;
       const { userId } = res.locals.user;
+
+      const findPost = await this.postService.findOnePost(postId);
+      const findkey = findPost.postImg.split("/")[3];
+      console.log(findkey);
+
+      if (userId !== findPost.userId) {
+        return res.status(400).json({ errorMessage: "권한이 없습니다." });
+      }
+
+      const s3 = new aws.S3({
+        accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+        region: process.env.AWS_REGION,
+      });
+
+      const params = {
+        Bucket: process.env.AWS_BUCKET_NAME,
+        Key: findkey,
+      };
+
+      s3.deleteObject(params, function (err, data) {
+        if (err) {
+          console.log(err, err.stack);
+        } else {
+          res.status(200);
+          //next();
+        }
+      });
+
       await this.postService.deletePosts(postId, userId);
       res.status(200).send({ ok: true, msg: "게시글이 삭제되었습니다" });
     } catch (error) {
       res
         .status(error.status || 400)
         .send({ ok: false, message: error.message });
-      next(error);
     }
   };
 
