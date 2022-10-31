@@ -1,4 +1,4 @@
-const { Post, User, Save } = require("../models");
+const { Post, User, Save, Comment, Like } = require('../models');
 
 class PostRepository {
   //게시글전체조회
@@ -11,17 +11,21 @@ class PostRepository {
   };
   //게시글상세조회
   findOnePost = async (postId) => {
-
     const postsOne = await Post.findOne({
-      where: { postId, commentId },
+      where: { postId },
       include: [
         {
-           model: User,
-           include: [{ model: Comment }],
-          }],
+          model: User,
+        },
+        {
+          model: Comment,
+          include: [{ model: User }, { model: Like }],
+        },
+      ],
     });
     return postsOne;
   };
+
   //게시글업로드
   createPosts = async (userId, title, content) => {
     await Post.create({

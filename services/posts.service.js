@@ -24,13 +24,30 @@ class PostService {
   //게시글상세조회
   findOnePost = async (postId) => {
     const postsOne = await this.postRepository.findOnePost(postId);
+    const commentArray = postsOne.Comments;
+    const commentData = commentArray.map((x) => {
+      let boolean;
+
+      (x.Likes.length) ? (boolean = true) : (boolean = false);
+      return {
+        userId: x.userId,
+        nickname: x.User.nickname,
+        user_img: 'img_url',
+        comment: x.comment,
+        likeCount: x.likeCount,
+        isLike: boolean,
+      };
+    });
     return {
+      userId: postsOne.userId,
       postId: postsOne.postId,
       title: postsOne.title,
       content: postsOne.content,
+      img: 'img_url',
       nickname: postsOne.User.nickname,
-      createdAt: postsOne.createdAt,
-      updatedAt: postsOne.updatedAt,
+      profile_img:"img_url",
+
+      comment: commentData,
     };
   };
 
