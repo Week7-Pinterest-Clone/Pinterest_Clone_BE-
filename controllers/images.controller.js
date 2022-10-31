@@ -25,7 +25,7 @@ class ImagesController {
       const image = req.files;
       const value = Object.values({image})
       const imageUrl = value[0][0].transforms[0].location
-      // console.log(value, "벨류벨류")
+      console.log(imageUrl, "벨류벨류")
 
       if (!image) {
         res.status(400).send({ message: "이미지가 없다." });
