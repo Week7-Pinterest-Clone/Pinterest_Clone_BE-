@@ -41,12 +41,14 @@ class PostService {
     return {
       userId: postsOne.userId,
       postId: postsOne.postId,
+      userId: postsOne.userId,
       title: postsOne.title,
       content: postsOne.content,
       img: 'img_url',
       nickname: postsOne.User.nickname,
-      profile_img:"img_url",
-
+      postImg:postsOne.postImg,
+      createdAt: postsOne.createdAt,
+      updatedAt: postsOne.updatedAt,
       comment: commentData,
     };
   };

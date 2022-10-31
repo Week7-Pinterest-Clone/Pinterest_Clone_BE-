@@ -58,6 +58,17 @@ class PostRepository {
   destroysave = async (postId, userId) => {
     await Save.destroy({ where: { postId: postId, userId: userId } });
   };
+
+
+  // 이미지 Url 보내기
+  uploadImages = async (uploadedImages, userId, postId) => {
+    const updateImageUrl = await Post.update(
+      { postImg: uploadedImages },
+      { where: { userId, postId } }
+    );
+
+    return updateImageUrl;
+  };
 }
 
 module.exports = PostRepository;

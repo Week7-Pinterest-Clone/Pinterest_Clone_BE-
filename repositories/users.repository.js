@@ -58,6 +58,16 @@ class UserRepository {
   updateToken = async (refreshToken, userId) => {
     await User.update({ refreshToken }, { where: { userId: userId } });
   };
+
+
+  uploadImage = async (uploadedImage, userId) => {
+    const updateImageUrl = await User.update(
+      { userImg: uploadedImage },
+      { where: { userId } }
+    );
+
+    return updateImageUrl;
+  };
 }
 
 module.exports = UserRepository;
