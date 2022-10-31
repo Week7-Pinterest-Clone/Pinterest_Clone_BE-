@@ -1,4 +1,4 @@
-const { Post, User, Save, Comment, Like } = require("../models");
+const { Post, User, Save, Comment, Like } = require('../models');
 
 class PostRepository {
   //게시글전체조회
@@ -28,6 +28,11 @@ class PostRepository {
     });
     console.log(postsOne);
     return postsOne;
+  };
+
+  //게시글작성자 찾기
+  findAuthor = async (postId) => {
+    return await Post.findByPk(postId);
   };
 
   //게시글업로드
@@ -65,6 +70,8 @@ class PostRepository {
 
   // 이미지 Url 보내기
   uploadImages = async (uploadedImages, userId, postId) => {
+    console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
+    console.log(userId);
     const updateImageUrl = await Post.update(
       { postImg: uploadedImages },
       { where: { userId, postId } }

@@ -42,8 +42,8 @@ class ImagesController {
   uploadImages = async (req, res, next) => {
     const { userId } = res.locals.user;
     const { postId } = req.params;
-    const findPost = await this.postsService.findOnePost(postId);
-    if (userId !== findPost.userId) {
+    const Author = await this.postsService.findAuthor(postId);
+    if (userId !== Author.userId) {
       return res.status(400).json({ errorMessage: "권한이 없습니다." });
     }
     try {
