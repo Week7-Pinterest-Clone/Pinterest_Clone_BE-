@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const postsRouter = Router();
-const upload = require('../modules/multer');
+const upload = require('../modules/posts.multer');
 
 const authMiddleware = require("../middlewares/authMiddleware");
 
@@ -16,10 +16,13 @@ postsRouter.get('/', postsController.getPosts);
 //게시글상세조회
 postsRouter.get('/:postId', postsController.getOnePosts);
 //게시글 삭제
-postsRouter.delete('/:postId',authMiddleware,  postsController.deletePosts);
+postsRouter.delete('/:postId',authMiddleware, imagesController.deleteImage, postsController.deletePosts);
 //게시글 저장 (찜하기)
 postsRouter.put('/:postId',authMiddleware,  postsController.savePosts);
 // 게시글 이미지 업로드
 postsRouter.post('/:postId/image', authMiddleware, upload.array('image',5), imagesController.uploadImages);
+
+// // 게시글 이미지 삭제
+// postsRouter.delete('/:postId/image', authMiddleware, imagesController.deleteImage);
 
 module.exports = postsRouter;

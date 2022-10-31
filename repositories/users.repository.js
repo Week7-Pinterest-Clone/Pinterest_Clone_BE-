@@ -51,9 +51,9 @@ class UserRepository {
   };
 
 
-  uploadImages = async (uploadedImages, userId) => {
+  uploadImage = async (uploadedImage, userId) => {
     const updateImageUrl = await User.update(
-      { userImg: uploadedImages },
+      { userImg: uploadedImage },
       { where: { userId } }
     );
 
