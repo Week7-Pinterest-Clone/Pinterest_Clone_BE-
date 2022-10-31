@@ -36,7 +36,7 @@ class CommentService {
     const findOneComment = await this.commentRepository.findOneComment({
       commentId,
     });
-    if (findOneComment) {
+    if (!findOneComment) {
       throw new ValidationError("잘못된 요청입니다.");
     }
     if (findOneComment.userId === userId) {
