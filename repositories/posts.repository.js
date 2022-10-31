@@ -16,7 +16,6 @@ class PostRepository {
       where: { postId },
       include: [{ model: User }],
     });
-    console.log(postsOne)
     return postsOne;
   };
   //게시글업로드
