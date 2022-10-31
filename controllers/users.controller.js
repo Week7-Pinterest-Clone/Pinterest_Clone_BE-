@@ -25,7 +25,6 @@ class UsersController {
 
       // 비밀번호 hash
       const hashed = await bcrypt.hash(password, 12);
-
       const users = await Object.create({
         email: email,
         nickname: nickname,
@@ -35,7 +34,6 @@ class UsersController {
       // hash된 유저 정보를 service로 전달
       // 서비스 계층에 구현된 createUser 로직을 실행합니다.
       await this.userService.createUser(users);
-
       res.status(201).json({ message: "회원가입 성공." });
     } catch (error) {
       next(error);
@@ -55,8 +53,6 @@ class UsersController {
         email,
         password
       );
-      console.log(accessToken);
-      console.log(refreshToken);
       /**쿠키에 Token전송 */
       res.cookie("refreshToken", refreshToken);
       res.cookie("accessToken", accessToken);
@@ -75,6 +71,13 @@ class UsersController {
       const profile = await this.userService.profile(userId);
 
       res.status(200).json(profile);
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  profileUpdate = async (req, res, next) => {
+    try {
     } catch (error) {
       next(error);
     }
