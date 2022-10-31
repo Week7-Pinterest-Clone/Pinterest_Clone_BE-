@@ -31,7 +31,7 @@ class ImagesController {
         res.status(400).send({ message: "이미지가 없다." });
         return;
       }
-      res.status(200).json({ imageUrl });
+      res.status(200).json({msg:"이미지 업로드 완료!", userimg: imageUrl });
 
       await this.imageService.uploadImage(imageUrl, userId);
     } catch (error) {
@@ -78,7 +78,7 @@ class ImagesController {
 
       await this.imageService.uploadImages(imageUrls, userId, postId);
 
-      res.status(200).send(imageUrls);
+      res.status(200).json({msg:"이미지 업로드 완료!", postimg: imageUrls});
     } catch (error) {
       next(error);
     }
