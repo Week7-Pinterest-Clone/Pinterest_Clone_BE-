@@ -1,4 +1,4 @@
-const { Post, User, Save, Comment, Like } = require('../models');
+const { Post, User, Save, Comment, Like } = require("../models");
 
 class PostRepository {
   //게시글전체조회
@@ -10,7 +10,7 @@ class PostRepository {
     return allPost;
   };
   //게시글상세조회
-  findOnePost = async (postId) => {
+  findOnePost = async (postId, userId) => {
     const postsOne = await Post.findOne({
       where: { postId },
       include: [
@@ -19,10 +19,14 @@ class PostRepository {
         },
         {
           model: Comment,
-          include: [{ model: User }, { model: Like }],
+          include: [
+            { model: User },
+            { model: Like, where: { userId: userId }, required: false },
+          ],
         },
       ],
     });
+    console.log(postsOne);
     return postsOne;
   };
 
@@ -58,7 +62,6 @@ class PostRepository {
   destroysave = async (postId, userId) => {
     await Save.destroy({ where: { postId: postId, userId: userId } });
   };
-
 
   // 이미지 Url 보내기
   uploadImages = async (uploadedImages, userId, postId) => {
