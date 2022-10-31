@@ -53,7 +53,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       likeCount: {
         type: DataTypes.INTEGER,
-        defaltValue: 0,
+        defaultValue: 0,
       },
       createdAt: {
         allowNull: false,

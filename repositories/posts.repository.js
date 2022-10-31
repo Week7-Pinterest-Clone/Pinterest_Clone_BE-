@@ -1,4 +1,4 @@
-const { Post, User, Save } = require("../models");
+const { Post, User, Save, Comment, Like } = require('../models');
 
 class PostRepository {
   //게시글전체조회
@@ -13,11 +13,19 @@ class PostRepository {
   findOnePost = async (postId) => {
     const postsOne = await Post.findOne({
       where: { postId },
-      include: [{ model: User }],
+      include: [
+        {
+          model: User,
+        },
+        {
+          model: Comment,
+          include: [{ model: User }, { model: Like }],
+        },
+      ],
     });
-
     return postsOne;
   };
+
   //게시글업로드
   createPosts = async (userId, title, content) => {
     await Post.create({
@@ -25,14 +33,13 @@ class PostRepository {
       title,
       content,
     });
-
     return;
   };
 
   //게시글 삭제
-  deletePosts = async (postId, userId) => {
+  deletePosts = async (postId) => {
     const deletePost = Post.destroy({
-      where: { postId, userId },
+      where: { postId },
     });
 
     return deletePost;
@@ -42,16 +49,25 @@ class PostRepository {
 
   findSave = async ({ postId, userId }) => {
     const findSave = await Save.findOne({ where: { userId, postId } });
-    console.log(postId, userId);
     return findSave;
   };
   createSave = async (postId, userId) => {
     const savedAt = new Date();
     await Save.create({ userId: userId, postId: postId, savedAt: savedAt });
-    console.log(postId, userId);
   };
   destroysave = async (postId, userId) => {
     await Save.destroy({ where: { postId: postId, userId: userId } });
+  };
+
+
+  // 이미지 Url 보내기
+  uploadImages = async (uploadedImages, userId, postId) => {
+    const updateImageUrl = await Post.update(
+      { postImg: uploadedImages },
+      { where: { userId, postId } }
+    );
+
+    return updateImageUrl;
   };
 }
 

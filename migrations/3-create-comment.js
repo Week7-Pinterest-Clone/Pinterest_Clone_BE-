@@ -32,7 +32,7 @@ module.exports = {
       },
       likeCount: {
         type: Sequelize.INTEGER,
-        defaltValue: 0,
+        defaultValue: 0,
       },
       createdAt: {
         allowNull: false,

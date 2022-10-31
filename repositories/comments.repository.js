@@ -1,4 +1,4 @@
-const { Comment } = require("../models/");
+const { Comment, User, Like } = require("../models/");
 
 class CommentRepository extends Comment {
   constructor() {
@@ -14,24 +14,11 @@ class CommentRepository extends Comment {
     return createComment;
   };
   //*댓글 찾기
-  findOneComment = async (commentId) => {
-    const comments = await Comment.findByPk(commentId);
+  findOneComment = async ({ commentId }) => {
+    const comments = await Comment.findOne({ where: { commentId } });
     return comments;
   };
-  //*댓글조회
-  findAllComment = async ({ postId }) => {
-    const findAllComment = await Comment.findAll({
-      where: { postId },
-      include: [
-        {
-          model: User,
-          attributes: [nickname, userId],
-        },
-        { model: Like, attributes: [isLike] },
-      ],
-    });
-    return findAllComment;
-  };
+
   //*댓글수정
   updateComment = async ({ userId, comment, commentId }) => {
     const updateComment = await Comment.update(
@@ -43,7 +30,7 @@ class CommentRepository extends Comment {
   //*댓글 삭제
   deleteComment = async ({ commentId }) => {
     const deleteComment = await Comment.destroy({
-      where: { commentId: commentId },
+      where: { commentId },
     });
     return deleteComment;
   };
