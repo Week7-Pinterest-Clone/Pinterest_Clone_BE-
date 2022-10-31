@@ -13,7 +13,6 @@ const {
 } = require("./middlewares/error-handler.middleware");
 
 const app = express();
-// const http = Http.createServer(app);
 const port = process.env.EXPRESS_PORT || 3000;
 
 app.use(cors());
@@ -45,9 +44,3 @@ if (process.env.NODE_ENV == "production") {
     console.log("HTTP 서버가 실행되었습니다. 포트 :: " + port);
   });
 }
-
-// http.listen(port, () => {
-//   console.log(`Start listen Server: ${port}`);
-// });
-
-// module.exports = http;
