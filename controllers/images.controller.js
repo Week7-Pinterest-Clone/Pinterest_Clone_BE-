@@ -11,7 +11,7 @@ class ImagesController {
 
   uploadImage = async (req, res, next) => {
     const { email } = res.locals.user;
-    //console.log(email, "이메일")
+    console.log(email, "이메일")
     const { userId } = req.params;
     //console.log(userId)
     const findUser = await this.usersService.profile(userId)
@@ -66,43 +66,45 @@ class ImagesController {
     }
   };
 
-  deleteImage = async (req, res, next) => {
-    const { userId } = res.locals.user;
-    const { postId } = req.params;
-    const findPost = await this.postsService.findOnePost(postId);
-    const findkey = findPost.postImg.split("/")[3];
-    console.log(findkey);
 
-    if (userId !== findPost.userId) {
-      return res.status(400).json({ errorMessage: "권한이 없습니다." });
-    }
+  // S3 이미지 삭제
+  // deleteImage = async (req, res, next) => {
+  //   const { userId } = res.locals.user;
+  //   const { postId } = req.params;
+  //   const findPost = await this.postsService.findOnePost(postId);
+  //   const findkey = findPost.postImg.split("/")[3];
+  //   console.log(findkey);
 
-    try {
+  //   if (userId !== findPost.userId) {
+  //     return res.status(400).json({ errorMessage: "권한이 없습니다." });
+  //   }
 
-      const s3 = new aws.S3({
-        accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-        region: process.env.AWS_REGION,
-      });
+  //   try {
 
-      const params = {
-        Bucket: process.env.AWS_BUCKET_NAME,
-        Key: findkey,
-      };
+  //     const s3 = new aws.S3({
+  //       accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  //       secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  //       region: process.env.AWS_REGION,
+  //     });
 
-      s3.deleteObject(params, function (err, data) {
-        if (err) {
-          console.log(err, err.stack);
-        } else {
-          res.status(200).json({ message: "이미지와 게시글이 삭제되었습니다." });
-          next();
-        }
+  //     const params = {
+  //       Bucket: process.env.AWS_BUCKET_NAME,
+  //       Key: findkey,
+  //     };
 
-      });
-    } catch (error) {
-      next(error);
-    }
-  };
+  //     s3.deleteObject(params, function (err, data) {
+  //       if (err) {
+  //         console.log(err, err.stack);
+  //       } else {
+  //         res.status(200).json({ message: "이미지와 게시글이 삭제되었습니다." });
+  //         next();
+  //       }
+
+  //     });
+  //   } catch (error) {
+  //     next(error);
+  //   }
+  // };
 }
 
 module.exports = ImagesController;
