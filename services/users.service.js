@@ -68,6 +68,7 @@ class UserService {
       email: user.email,
       avatar: user.userImg,
       post: posts,
+      isSave: true,
     };
   };
 
