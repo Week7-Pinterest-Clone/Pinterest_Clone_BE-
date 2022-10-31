@@ -70,6 +70,12 @@ class UserService {
       post: posts,
     };
   };
+
+  profileUpdate = async (userId) => {
+    const user = await this.userRepository.findById(userId);
+
+    return user.userImg;
+  };
 }
 
 module.exports = UserService;

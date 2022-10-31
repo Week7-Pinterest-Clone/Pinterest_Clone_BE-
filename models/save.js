@@ -52,7 +52,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: "Save",
-      timestamps: false
+      timestamps: false,
     }
   );
   return Save;

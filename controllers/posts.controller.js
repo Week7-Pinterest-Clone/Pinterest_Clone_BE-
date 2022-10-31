@@ -20,8 +20,9 @@ class PostsController {
   //게시글 상세조회
   getOnePosts = async (req, res, next) => {
     try {
+      const { userId } = res.locals.user;
       const postId = req.params.postId;
-      const postsOne = await this.postService.findOnePost(postId);
+      const postsOne = await this.postService.findOnePost(postId, userId);
 
       res.status(200).json(postsOne);
     } catch (error) {
@@ -85,7 +86,6 @@ class PostsController {
       res
         .status(error.status || 400)
         .send({ ok: false, message: error.message });
-      //next(error)
     }
   };
 
