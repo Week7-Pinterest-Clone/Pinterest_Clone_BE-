@@ -76,7 +76,6 @@ class PostsController {
           console.log(err, err.stack);
         } else {
           res.status(200);
-          next();
         }
       });
 

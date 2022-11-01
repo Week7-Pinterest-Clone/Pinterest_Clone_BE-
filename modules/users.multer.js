@@ -1,8 +1,8 @@
-const multer = require('multer');
+const multer = require("multer");
 //const multerS3 = require('multer-s3');
 const multerS3 = require("multer-s3-transform");
 const sharp = require("sharp");
-const aws = require('aws-sdk');
+const aws = require("aws-sdk");
 require("dotenv").config();
 
 const s3 = new aws.S3({
@@ -17,7 +17,6 @@ const upload = multer({
   storage: multerS3({
     s3: s3,
     bucket: process.env.AWS_BUCKET_NAME,
-    
     shouldTransform: true,
     transforms: [
       {
@@ -29,10 +28,10 @@ const upload = multer({
           cb(null, `profile-image/${Date.now()}`);
         },
       },
-    ],    
-    acl: 'public-read',
+    ],
+    acl: "public-read",
     contentType: multerS3.AUTO_CONTENT_TYPE,
-    
+
     // key: fileName
     // key: function (req, file, cb) {
     //   //cb(null, `${Date.now()}_${file.originalname}`);
