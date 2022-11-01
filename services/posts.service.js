@@ -1,8 +1,10 @@
-const PostRepository = require("../repositories/posts.repository");
+const PostRepository = require('../repositories/posts.repository');
+const UserRepository = require('../repositories/users.repository');
+
 
 class PostService {
   postRepository = new PostRepository();
-
+  userRepository = new UserRepository();
   //게시글전체조회
   findAllPost = async () => {
     const allPost = await this.postRepository.findAllPost();
@@ -23,10 +25,9 @@ class PostService {
 
   //게시글상세조회
   findOnePost = async (postId, userId) => {
-    console.log("포스트서비스");
-    console.log(userId);
     const postsOne = await this.postRepository.findOnePost(postId, userId);
     const commentArray = postsOne.Comments;
+    const userData = await this.userRepository.findById(userId);
     const commentData = commentArray.map((x) => {
       let boolean;
 
@@ -34,7 +35,9 @@ class PostService {
       return {
         userId: x.userId,
         nickname: x.User.nickname,
-        user_img: x.User.userImg,
+
+        user_img: x.User.userImg, // 댓글작성자프로필
+
         comment: x.comment,
         likeCount: x.likeCount,
         isLike: boolean,
@@ -43,12 +46,12 @@ class PostService {
     return {
       userId: postsOne.userId,
       postId: postsOne.postId,
-      userId: postsOne.userId,
       title: postsOne.title,
       content: postsOne.content,
-      img: "img_url",
+      img: postsOne.postImg, //게시글이미지
       nickname: postsOne.User.nickname,
-      postImg: postsOne.postImg,
+      profile_img: postsOne.User.userImg, //작성자프로필
+      myprofile: userData.userImg, //로그인유저 프로필
       createdAt: postsOne.createdAt,
       updatedAt: postsOne.updatedAt,
       comment: commentData,
