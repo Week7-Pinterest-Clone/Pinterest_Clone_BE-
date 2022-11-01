@@ -34,7 +34,7 @@ class PostService {
       x.Likes.length ? (boolean = true) : (boolean = false);
       return {
         userId: x.userId,
-        commentId: x.commentId, //있는게 좋지않을까..?
+        commentId: x.commentId,
         nickname: x.User.nickname,
         user_img: x.User.userImg, // 댓글작성자프로필
         comment: x.comment,
