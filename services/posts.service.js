@@ -18,6 +18,7 @@ class PostService {
         title: post.title,
         createdAt: post.createdAt,
         updatedAt: post.updatedAt,
+        img: post.postImg,
       };
     });
   };
@@ -34,9 +35,7 @@ class PostService {
       return {
         userId: x.userId,
         nickname: x.User.nickname,
-
         user_img: x.User.userImg, // 댓글작성자프로필
-
         comment: x.comment,
         likeCount: x.likeCount,
         isLike: boolean,
