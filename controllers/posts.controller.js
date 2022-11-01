@@ -53,10 +53,11 @@ class PostsController {
       const { userId } = res.locals.user;
 
       const findPost = await this.postService.findAuthor(postId);
-      const findkey = findPost.postImg.split("/")[3];
+      const findkey = findPost.postImg.split("/")[4];
+      const keyinfo = `posts-image/${findkey}`
       console.log(findkey);
-      console.log("aaaaaaaaaaaaa");
-      console.log(findPost.userId);
+      // console.log("aaaaaaaaaaaaa");
+      // console.log(findPost.userId);
 
       if (userId !== findPost.userId) {
         return res.status(400).json({ errorMessage: "권한이 없습니다." });
@@ -70,7 +71,7 @@ class PostsController {
 
       const params = {
         Bucket: process.env.AWS_BUCKET_NAME,
-        Key: findkey,
+        Key: keyinfo,
       };
 
       s3.deleteObject(params, function (err, data) {
