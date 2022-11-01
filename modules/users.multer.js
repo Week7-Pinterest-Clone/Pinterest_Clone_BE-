@@ -1,14 +1,15 @@
-const multer = require('multer');
+const multer = require("multer");
 //const multerS3 = require('multer-s3');
 const multerS3 = require("multer-s3-transform");
 const sharp = require("sharp");
-const aws = require('aws-sdk');
+const aws = require("aws-sdk");
+const path = require('path');
 require("dotenv").config();
 
 const s3 = new aws.S3({
-  accessKeyId: process.env.AWS2_ACCESS_KEY_ID,
-  secretAccessKey: process.env.AWS2_SECRET_ACCESS_KEY,
-  region: process.env.AWS2_KEY_REGION,
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  region: process.env.AWS_KEY_REGION,
 });
 
 // const fileName = Math.floor(Math.random() * 100000000).toString();
@@ -16,8 +17,7 @@ const s3 = new aws.S3({
 const upload = multer({
   storage: multerS3({
     s3: s3,
-    bucket: process.env.AWS2_BUCKET_NAME,
-    
+    bucket: process.env.AWS_BUCKET_NAME,
     shouldTransform: true,
     transforms: [
       {
@@ -26,13 +26,14 @@ const upload = multer({
           cb(null, sharp().resize(300, 300)); //이미지 사이즈
         },
         key: function (req, file, cb) {
-          cb(null, Date.now().toString());
+          const ext = path.extname(file.originalname);
+          cb(null, `profile-image/${Date.now()}${ext}`);
         },
       },
-    ],    
-    acl: 'public-read',
+    ],
+    acl: "public-read",
     contentType: multerS3.AUTO_CONTENT_TYPE,
-    
+
     // key: fileName
     // key: function (req, file, cb) {
     //   //cb(null, `${Date.now()}_${file.originalname}`);

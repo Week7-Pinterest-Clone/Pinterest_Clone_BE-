@@ -76,13 +76,12 @@ class UsersController {
     }
   };
 
-  profileUpdate = async (req, res, next) => {
+  profileUpdatePage = async (req, res, next) => {
     try {
       const { userId } = req.params;
       const loginUser = res.locals.user.userId;
       if (userId == loginUser) {
-        const userImg = await this.userService.profileUpdate(userId);
-
+        const userImg = await this.userService.profileUpdatePage(userId);
         res.status(200).json({ userimg: userImg });
       } else {
         res.status(401).json({ ok: false, msg: "권한이 없습니다." });

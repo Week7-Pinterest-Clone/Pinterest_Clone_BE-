@@ -48,7 +48,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       postImg: {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: false,
       },
       isSave: {
         type: DataTypes.BOOLEAN,

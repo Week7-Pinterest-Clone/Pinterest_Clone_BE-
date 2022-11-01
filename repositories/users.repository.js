@@ -1,6 +1,7 @@
 const { User, Post, Save } = require('../models');
 const { Op } = require('sequelize');
 
+
 class UserRepository {
   /**유저생성 */
   createUser = async ({ email, nickname, password }) => {
@@ -68,6 +69,14 @@ class UserRepository {
     );
 
     return updateImageUrl;
+  };
+
+  updateNickname = async (nickname, userId) => {
+    await User.update({ nickname: nickname }, { where: { userId: userId } });
+  };
+
+  updateIntroduce = async (introduce, userId) => {
+    await User.update({ introduce: introduce }, { where: { userId: userId } });
   };
 }
 

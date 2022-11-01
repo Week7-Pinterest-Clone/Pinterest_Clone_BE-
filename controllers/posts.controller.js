@@ -55,6 +55,8 @@ class PostsController {
       const findPost = await this.postService.findAuthor(postId);
       const findkey = findPost.postImg.split("/")[3];
       console.log(findkey);
+      console.log("aaaaaaaaaaaaa");
+      console.log(findPost.userId);
 
       if (userId !== findPost.userId) {
         return res.status(400).json({ errorMessage: "권한이 없습니다." });
@@ -76,7 +78,6 @@ class PostsController {
           console.log(err, err.stack);
         } else {
           res.status(200);
-          next();
         }
       });
 
