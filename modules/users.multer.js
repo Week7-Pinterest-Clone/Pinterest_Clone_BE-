@@ -27,7 +27,7 @@ const upload = multer({
         },
         key: function (req, file, cb) {
           const ext = path.extname(file.originalname);
-          cb(null, `profile-image/${Date.now()}+${ext}`);
+          cb(null, `profile-image/${Date.now()}${ext}`);
         },
       },
     ],
