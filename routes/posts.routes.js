@@ -10,7 +10,12 @@ const ImagesController = require("../controllers/images.controller");
 const imagesController = new ImagesController();
 
 //게시글업로드
-postsRouter.post("/", authMiddleware, upload.array("image", 5), imagesController.createPosts);
+postsRouter.post(
+  "/",
+  authMiddleware,
+  upload.array("image", 5),
+  imagesController.createPosts
+);
 
 //게시글전체조회
 postsRouter.get("/", authMiddleware, postsController.getPosts);

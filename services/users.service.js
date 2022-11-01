@@ -62,8 +62,6 @@ class UserService {
     const user = await this.userRepository.findById(userId);
 
     const posts = user.Saves.map((x) => {
-      console.log("aaaaaaaaaaaaaaa");
-      console.log(x);
       return {
         postId: x.Post.postId,
         userId: x.Post.userId,
