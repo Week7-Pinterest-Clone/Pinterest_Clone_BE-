@@ -1,5 +1,5 @@
-const { User, Post, Save } = require("../models");
-const { Op } = require("sequelize");
+const { User, Post, Save } = require('../models');
+const { Op } = require('sequelize');
 
 class UserRepository {
   /**유저생성 */
@@ -9,7 +9,7 @@ class UserRepository {
       nickname,
       password,
       userImg:
-        "https://imgfiles-cdn.plaync.com/file/LoveBeat/download/20200204052053-LbBHjntyUkg2jL3XC3JN0-v4",
+        'https://imgfiles-cdn.plaync.com/file/LoveBeat/download/20200204052053-LbBHjntyUkg2jL3XC3JN0-v4',
     });
     return;
   };
@@ -48,7 +48,7 @@ class UserRepository {
       include: [
         {
           model: Save,
-          order: [["savedAt", "ASC"]],
+          order: [['savedAt', 'ASC']],
           include: [{ model: Post }],
         },
       ],
@@ -60,7 +60,6 @@ class UserRepository {
   updateToken = async (refreshToken, userId) => {
     await User.update({ refreshToken }, { where: { userId: userId } });
   };
-
 
   uploadImage = async (uploadedImage, userId) => {
     const updateImageUrl = await User.update(
