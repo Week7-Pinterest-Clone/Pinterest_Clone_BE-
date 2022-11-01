@@ -28,7 +28,6 @@ class ImagesController {
       if (image) {
         const value = Object.values({ image });
         const imageUrl = value[0][0].transforms[0].location;
-        console.log(imageUrl, "벨류벨류");
         await this.imageService.uploadImage(imageUrl, userId);
       }
 
@@ -55,14 +54,11 @@ class ImagesController {
   createPosts = async (req, res, next) => {
     const { userId } = res.locals.user;
     const { title, content } = req.body;
-    console.log("aaaaaaaaaaaaaaaaaaa");
-    console.log(title, content);
     try {
       const images = req.files;
 
       const values = Object.values({ images });
       const imageUrls = values[0][0].transforms[0].location;
-      console.log(imageUrls, "벨류벨류");
 
       // if (!images) {
       //   res.status(400).send({ message: "이미지를 추가해 주세요." });

@@ -71,8 +71,6 @@ class PostRepository {
 
   // 이미지 Url 보내기
   createPost = async (uploadedImages, userId, title, content) => {
-    console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-    console.log(userId);
     const createPost = await Post.create({
       postImg: uploadedImages,
       userId: userId,
