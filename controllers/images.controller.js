@@ -11,7 +11,7 @@ class ImagesController {
 
   profileUpdate = async (req, res, next) => {
     const { email } = res.locals.user;
-    console.log(email, "이메일");
+    //console.log(email, "이메일");
     const { userId } = req.params;
     //console.log(userId)
     const findUser = await this.usersService.profile(userId);
@@ -26,6 +26,34 @@ class ImagesController {
 
       //이미지 수정
       if (image) {
+        const findUserImage = findUser.avatar.split("/")[4];
+        const findUserLastImage = `profile-image/${findUserImage}`;
+        console.log(findUserImage, "아아아아");
+
+        try {
+          const s3 = new aws.S3({
+            accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+            secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+            region: process.env.AWS_REGION,
+          });
+
+          const params = {
+            Bucket: process.env.AWS_BUCKET_NAME,
+            Key: findUserLastImage,
+          };
+
+          s3.deleteObject(params, function (err, data) {
+            if (err) {
+              console.log(err, err.stack);
+            } else {
+              res.status(200)
+              next();
+            }
+          });
+        } catch (error) {
+          next(error);
+        }
+
         const value = Object.values({ image });
         const imageUrl = value[0][0].transforms[0].location;
         await this.imageService.uploadImage(imageUrl, userId);
