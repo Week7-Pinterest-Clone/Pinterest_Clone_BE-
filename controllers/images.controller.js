@@ -52,25 +52,23 @@ class ImagesController {
   };
 
   // 게시글(post) 이미지
-  uploadImages = async (req, res, next) => {
+  createPosts = async (req, res, next) => {
     const { userId } = res.locals.user;
-    const { postId } = req.params;
-    const Author = await this.postsService.findAuthor(postId);
-    if (userId !== Author.userId) {
-      return res.status(400).json({ errorMessage: "권한이 없습니다." });
-    }
+    const { title, content } = req.body;
+    console.log("aaaaaaaaaaaaaaaaaaa");
+    console.log(title, content);
     try {
       const images = req.files;
+
       const values = Object.values({ images });
       const imageUrls = values[0][0].transforms[0].location;
       console.log(imageUrls, "벨류벨류");
 
-      if (!images) {
-        res.status(400).send({ message: "이미지를 추가해 주세요." });
-        return;
-      }
-
-      await this.imageService.uploadImages(imageUrls, userId, postId);
+      // if (!images) {
+      //   res.status(400).send({ message: "이미지를 추가해 주세요." });
+      //   return;
+      // }
+      await this.imageService.createPost(imageUrls, userId, title, content);
 
       res.status(200).json({ msg: "이미지 업로드 완료!", postimg: imageUrls });
     } catch (error) {
