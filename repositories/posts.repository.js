@@ -1,4 +1,5 @@
-const { Post, User, Save, Comment, Like } = require('../models');
+const { Post, User, Save, Comment, Like } = require("../models");
+const user = require("../models/user");
 
 class PostRepository {
   //게시글전체조회
@@ -69,15 +70,17 @@ class PostRepository {
   };
 
   // 이미지 Url 보내기
-  uploadImages = async (uploadedImages, userId, postId) => {
-    console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
+  createPost = async (uploadedImages, userId, title, content) => {
+    console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
     console.log(userId);
-    const updateImageUrl = await Post.update(
-      { postImg: uploadedImages },
-      { where: { userId, postId } }
-    );
+    const createPost = await Post.create({
+      postImg: uploadedImages,
+      userId: userId,
+      title: title,
+      content: content,
+    });
 
-    return updateImageUrl;
+    return createPost;
   };
 }
 
