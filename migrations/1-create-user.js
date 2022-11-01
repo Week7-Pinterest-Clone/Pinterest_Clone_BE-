@@ -19,13 +19,21 @@ module.exports = {
       },
       password: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       userImg: {
         type: Sequelize.STRING,
         allowNull: true,
       },
       introduce: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      snsId: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      provider: {
         type: Sequelize.STRING,
         allowNull: true,
       },
