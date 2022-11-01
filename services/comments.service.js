@@ -5,6 +5,7 @@ class CommentService {
   constructor() {
     this.commentRepository = new CommentRepository();
   }
+
   //*댓글작성
   createComment = async ({ comment, postId, userId }) => {
     const createComment = await this.commentRepository.createComment({
@@ -31,12 +32,13 @@ class CommentService {
         commentId,
       });
   };
+
   //*댓글 삭제
   deleteComment = async ({ commentId, userId }) => {
     const findOneComment = await this.commentRepository.findOneComment({
       commentId,
     });
-    if (findOneComment) {
+    if (!findOneComment) {
       throw new ValidationError("잘못된 요청입니다.");
     }
     if (findOneComment.userId === userId) {

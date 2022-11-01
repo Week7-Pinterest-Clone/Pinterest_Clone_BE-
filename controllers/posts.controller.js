@@ -52,7 +52,7 @@ class PostsController {
       const { postId } = req.params;
       const { userId } = res.locals.user;
 
-      const findPost = await this.postService.findOnePost(postId);
+      const findPost = await this.postService.findAuthor(postId);
       const findkey = findPost.postImg.split("/")[3];
       console.log(findkey);
 
@@ -76,7 +76,6 @@ class PostsController {
           console.log(err, err.stack);
         } else {
           res.status(200);
-          // next();
         }
       });
 

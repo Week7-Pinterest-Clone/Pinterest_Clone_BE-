@@ -19,19 +19,19 @@ usersRouter.post("/login", loginAuthMiddleware, usersController.login);
 //유저 프로필 조회
 usersRouter.get("/:userId", authMiddleware, usersController.profile);
 
-//프로필 이미지
+//프로필 업데이트(이미지,닉네임,소개 수정)
 usersRouter.put(
-  "/:userId/image",
+  "/profile/:userId",
   authMiddleware,
   upload.array("image", 1),
-  imagesController.uploadImage
+  imagesController.profileUpdate
 );
 
 //내 정보 수정 페이지
 usersRouter.get(
   "/profile/:userId",
   authMiddleware,
-  usersController.profileUpdate
+  usersController.profileUpdatePage
 );
 
 module.exports = usersRouter;

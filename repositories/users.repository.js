@@ -1,5 +1,6 @@
 const { User, Post, Save } = require("../models");
 const { Op } = require("sequelize");
+const { use } = require("passport");
 
 class UserRepository {
   /**유저생성 */
@@ -61,7 +62,6 @@ class UserRepository {
     await User.update({ refreshToken }, { where: { userId: userId } });
   };
 
-
   uploadImage = async (uploadedImage, userId) => {
     const updateImageUrl = await User.update(
       { userImg: uploadedImage },
@@ -69,6 +69,14 @@ class UserRepository {
     );
 
     return updateImageUrl;
+  };
+
+  updateNickname = async (nickname, userId) => {
+    await User.update({ nickname: nickname }, { where: { userId: userId } });
+  };
+
+  updateIntroduce = async (introduce, userId) => {
+    await User.update({ introduce: introduce }, { where: { userId: userId } });
   };
 }
 

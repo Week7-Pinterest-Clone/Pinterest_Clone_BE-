@@ -1,4 +1,4 @@
-const PostRepository = require('../repositories/posts.repository');
+const PostRepository = require("../repositories/posts.repository");
 
 class PostService {
   postRepository = new PostRepository();
@@ -23,7 +23,7 @@ class PostService {
 
   //게시글상세조회
   findOnePost = async (postId, userId) => {
-    console.log('포스트서비스');
+    console.log("포스트서비스");
     console.log(userId);
     const postsOne = await this.postRepository.findOnePost(postId, userId);
     const commentArray = postsOne.Comments;
@@ -34,7 +34,7 @@ class PostService {
       return {
         userId: x.userId,
         nickname: x.User.nickname,
-        user_img: 'img_url',
+        user_img: x.User.userImg,
         comment: x.comment,
         likeCount: x.likeCount,
         isLike: boolean,
@@ -46,7 +46,7 @@ class PostService {
       userId: postsOne.userId,
       title: postsOne.title,
       content: postsOne.content,
-      img: 'img_url',
+      img: "img_url",
       nickname: postsOne.User.nickname,
       postImg: postsOne.postImg,
       createdAt: postsOne.createdAt,
@@ -68,9 +68,9 @@ class PostService {
   //게시글 삭제
   deletePosts = async (postId, userId) => {
     const findByauthor = await this.postRepository.findOnePost(postId);
-    if (!findByauthor) throw new Error('잘못된 요청입니다');
+    if (!findByauthor) throw new Error("잘못된 요청입니다");
     if (findByauthor.userId !== userId)
-      throw new Error('본인만 삭제할 수 있습니다');
+      throw new Error("본인만 삭제할 수 있습니다");
 
     const deletePost = await this.postRepository.deletePosts(postId);
     return {
@@ -83,10 +83,10 @@ class PostService {
     const findSave = await this.postRepository.findSave({ postId, userId });
     if (!findSave) {
       await this.postRepository.createSave(postId, userId);
-      return { msg: '게시글이 저장되었습니다' };
+      return { msg: "게시글이 저장되었습니다" };
     } else {
       await this.postRepository.destroysave(postId, userId);
-      return { msg: '게시글 저장이 취소되었습니다' };
+      return { msg: "게시글 저장이 취소되었습니다" };
     }
   };
 }

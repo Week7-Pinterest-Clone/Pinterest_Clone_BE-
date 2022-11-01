@@ -72,10 +72,18 @@ class UserService {
     };
   };
 
-  profileUpdate = async (userId) => {
+  profileUpdatePage = async (userId) => {
     const user = await this.userRepository.findById(userId);
 
     return user.userImg;
+  };
+
+  updateNickname = async (nickname, userId) => {
+    await this.userRepository.updateNickname(nickname, userId);
+  };
+
+  updateIntroduce = async (introduce, userId) => {
+    await this.userRepository.updateIntroduce(introduce, userId);
   };
 }
 

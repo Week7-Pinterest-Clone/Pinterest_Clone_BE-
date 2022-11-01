@@ -11,12 +11,14 @@ const imagesController = new ImagesController();
 
 //게시글업로드
 postsRouter.post("/", authMiddleware, postsController.createPosts);
+
 //게시글전체조회
 postsRouter.get("/", authMiddleware, postsController.getPosts);
+
 //게시글상세조회
 postsRouter.get("/:postId", authMiddleware, postsController.getOnePosts);
+
 //게시글 삭제
-//postsRouter.delete('/:postId',authMiddleware, imagesController.deleteImage);
 postsRouter.delete("/:postId", authMiddleware, postsController.deletePosts);
 
 //게시글 저장 (찜하기)
