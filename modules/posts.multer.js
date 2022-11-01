@@ -26,13 +26,15 @@ const upload = multer({
           cb(null, sharp().resize(1000)); //이미지 사이즈
         },
         key: function (req, file, cb) {
-          cb(null, Date.now().toString());
+          cb(null, `posts-image/${Date.now()}`);
         },
       },
     ],    
     acl: 'public-read',
     contentType: multerS3.AUTO_CONTENT_TYPE,
-    
+
+
+        
     // key: fileName
     // key: function (req, file, cb) {
     //   //cb(null, `${Date.now()}_${file.originalname}`);
