@@ -3,6 +3,7 @@ const multer = require("multer");
 const multerS3 = require("multer-s3-transform");
 const sharp = require("sharp");
 const aws = require("aws-sdk");
+const path = require('path');
 require("dotenv").config();
 
 const s3 = new aws.S3({
@@ -25,7 +26,8 @@ const upload = multer({
           cb(null, sharp().resize(1000)); //이미지 사이즈
         },
         key: function (req, file, cb) {
-          cb(null, `posts-image/${Date.now()}`);
+          const ext = path.extname(file.originalname);
+          cb(null, `posts-image/${Date.now()}+${ext}`);
         },
       },
     ],

@@ -64,9 +64,9 @@ class PostService {
   };
 
   //게시글업로드
-  createPosts = async (userId, title, content) => {
-    await this.postRepository.createPosts(userId, title, content);
-  };
+  // createPosts = async (userId, title, content) => {
+  //   await this.postRepository.createPosts(userId, title, content);
+  // };
 
   //게시글 삭제
   deletePosts = async (postId, userId) => {
