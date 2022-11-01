@@ -3,6 +3,9 @@ const express = require("express");
 const Http = require("http");
 const fs = require("fs");
 const HTTPS = require("https");
+const passport = require("passport");
+const passportConfig = require("./passport");
+const expressSession = require("express-session");
 
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
@@ -17,8 +20,25 @@ const port = process.env.EXPRESS_PORT || 3000;
 
 app.use(cors());
 
+passportConfig();
+app.use(express.static("public"));
+app.use(
+  expressSession({
+    resave: false,
+    saveUninitialized: false,
+    secret: [process.env.KAKAO_SECRET],
+    cookie: {
+      httpOnly: true,
+      secure: false,
+    },
+  })
+);
+
+app.use(passport.initialize());
 app.use(cookieParser());
 app.use(express.json());
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use("/", indexRouter);
 

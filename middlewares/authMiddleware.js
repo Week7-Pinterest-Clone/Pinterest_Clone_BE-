@@ -5,22 +5,24 @@ require("dotenv").config();
 // 유저 인증에 실패하면 403 상태 코드를 반환한다.
 module.exports = async (req, res, next) => {
   try {
-    const { accessToken, refreshToken } = req.cookies;
+    console.log(req.headers);
+    console.log(req.cookies);
+    const { accesstoken, refreshtoken } = req.headers;
 
-    if (!accessToken || !refreshToken) {
+    if (!accesstoken || !refreshtoken) {
       return res.status(403).send({
         errorMessage: "로그인이 필요한 기능입니다.",
       });
     }
 
     /**검증결과에 따라 true,false가 담김 (type: blooean)*/
-    const isAccessTokenValidate = validateAccessToken(accessToken);
-    const isRefreshTokenValidate = validateRefreshToken(refreshToken);
+    const isAccessTokenValidate = validateAccessToken(accesstoken);
+    const isRefreshTokenValidate = validateRefreshToken(refreshtoken);
 
     /**AccessToken검증 */
-    function validateAccessToken(accessToken) {
+    function validateAccessToken(accesstoken) {
       try {
-        jwt.verify(accessToken, process.env.SECRET_KEY);
+        jwt.verify(accesstoken, process.env.SECRET_KEY);
         return true;
       } catch (error) {
         return false;
@@ -28,9 +30,9 @@ module.exports = async (req, res, next) => {
     }
 
     /**RefreshToken검증 */
-    function validateRefreshToken(refreshToken) {
+    function validateRefreshToken(refreshtoken) {
       try {
-        jwt.verify(refreshToken, process.env.SECRET_KEY);
+        jwt.verify(refreshtoken, process.env.SECRET_KEY);
         return true;
       } catch (error) {
         return false;
@@ -44,8 +46,8 @@ module.exports = async (req, res, next) => {
     /**AccessToken만 만료시 AccessToken재발급 */
     if (!isAccessTokenValidate) {
       /**refresh토큰 에서 유저정보 받아오기 */
-      console.log(jwt.verify(refreshToken, process.env.SECRET_KEY));
-      const { userId } = jwt.verify(refreshToken, process.env.SECRET_KEY);
+      console.log(jwt.verify(refreshtoken, process.env.SECRET_KEY));
+      const { userId } = jwt.verify(refreshtoken, process.env.SECRET_KEY);
       console.log(userId);
 
       /**AccessToken 재발급 */
@@ -66,7 +68,7 @@ module.exports = async (req, res, next) => {
       res.locals.user = user;
     } else {
       /**토큰이 모두 유효한 경우 */
-      const { userId } = jwt.verify(accessToken, process.env.SECRET_KEY);
+      const { userId } = jwt.verify(accesstoken, process.env.SECRET_KEY);
       const user = await User.findByPk(userId);
       res.locals.user = user;
     }
