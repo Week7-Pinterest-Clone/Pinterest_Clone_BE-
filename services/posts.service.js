@@ -18,6 +18,7 @@ class PostService {
         title: post.title,
         createdAt: post.createdAt,
         updatedAt: post.updatedAt,
+        img: post.postImg,
       };
     });
   };
@@ -35,9 +36,7 @@ class PostService {
         userId: x.userId,
         commentId: x.commentId, //있는게 좋지않을까..?
         nickname: x.User.nickname,
-
         user_img: x.User.userImg, // 댓글작성자프로필
-
         comment: x.comment,
         likeCount: x.likeCount,
         isLike: boolean,
