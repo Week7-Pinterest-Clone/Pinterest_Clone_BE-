@@ -26,6 +26,10 @@ module.exports = {
           key: "userId",
         },
       },
+      savedAt: {
+        allowNull: false,
+        type: Sequelize.DATE,
+      },
     });
   },
   async down(queryInterface, Sequelize) {
