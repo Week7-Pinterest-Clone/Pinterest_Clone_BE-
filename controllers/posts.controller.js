@@ -33,18 +33,18 @@ class PostsController {
   };
 
   //게시글업로드
-  createPosts = async (req, res, next) => {
-    try {
-      const { userId } = res.locals.user;
-      const { title, content } = req.body;
-      await this.postService.createPosts(userId, title, content);
-      res.status(201).json({ ok: true, msg: "게시글업로드완료" });
-    } catch (error) {
-      res
-        .status(error.status || 400)
-        .send({ ok: false, message: error.message });
-    }
-  };
+  // createPosts = async (req, res, next) => {
+  //   try {
+  //     const { userId } = res.locals.user;
+  //     const { title, content } = req.body;
+  //     await this.postService.createPosts(userId, title, content);
+  //     res.status(201).json({ ok: true, msg: "게시글업로드완료" });
+  //   } catch (error) {
+  //     res
+  //       .status(error.status || 400)
+  //       .send({ ok: false, message: error.message });
+  //   }
+  // };
 
   //게시글 삭제
   deletePosts = async (req, res, next) => {
