@@ -1,6 +1,5 @@
-const PostRepository = require('../repositories/posts.repository');
-const UserRepository = require('../repositories/users.repository');
-
+const PostRepository = require("../repositories/posts.repository");
+const UserRepository = require("../repositories/users.repository");
 
 class PostService {
   postRepository = new PostRepository();
@@ -70,7 +69,7 @@ class PostService {
 
   //게시글 삭제
   deletePosts = async (postId, userId) => {
-    const findByauthor = await this.postRepository.findOnePost(postId);
+    const findByauthor = await this.postRepository.findAuthor(postId);
     if (!findByauthor) throw new Error("잘못된 요청입니다");
     if (findByauthor.userId !== userId)
       throw new Error("본인만 삭제할 수 있습니다");
