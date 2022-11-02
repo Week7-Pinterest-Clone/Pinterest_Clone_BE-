@@ -69,7 +69,6 @@ class UserService {
         postId: x.Post.postId,
         userId: x.Post.userId,
         title: x.Post.title,
-        content: x.Post.content,
         postImg: x.Post.postImg,
         isSave: true,
         createdAt: x.Post.createdAt,
@@ -80,6 +79,7 @@ class UserService {
     return {
       nickname: user.nickname,
       email: user.email,
+      content: user.introduce,
       avatar: user.userImg,
       post: posts,
     };
