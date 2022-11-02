@@ -66,10 +66,10 @@ class UsersController {
   profile = async (req, res, next) => {
     try {
       const { userId } = req.params;
-      const { Id } = res.locals.user.userId;
+      //const Id = res.locals.user.userId;
 
-      if (Id == userId) {
-      }
+      //if (Id == userId) {
+      //}
       const profile = await this.userService.profile(userId);
 
       res.status(200).json(profile);

@@ -60,8 +60,10 @@ class UserService {
 
   profile = async (userId) => {
     const user = await this.userRepository.findById(userId);
-
-    const posts = user.Saves.map((x) => {
+    let posts;
+    console.log(user.Saves.length);
+    // if (user.Saves.length) {
+    posts = user.Saves.map((x) => {
       return {
         postId: x.Post.postId,
         userId: x.Post.userId,
@@ -73,6 +75,7 @@ class UserService {
         updatedAt: x.Post.updatedAt,
       };
     });
+    // }
 
     return {
       nickname: user.nickname,
