@@ -61,8 +61,9 @@ class UserService {
   profile = async (userId) => {
     const user = await this.userRepository.findById(userId);
     let posts;
-    console.log(user.Saves.length);
-    // if (user.Saves.length) {
+    if (!user) {
+      throw new ValidationError("존재하지 않는 유저 입니다.");
+    }
     posts = user.Saves.map((x) => {
       return {
         postId: x.Post.postId,
@@ -75,7 +76,6 @@ class UserService {
         updatedAt: x.Post.updatedAt,
       };
     });
-    // }
 
     return {
       nickname: user.nickname,
