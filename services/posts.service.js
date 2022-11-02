@@ -7,11 +7,12 @@ class PostService {
   //게시글전체조회
   findAllPost = async () => {
     const allPost = await this.postRepository.findAllPost();
-
+    let isSave;
     allPost.sort((a, b) => {
       return b.createdAt - a.createdAt;
     });
     return allPost.map((post) => {
+      post.Saves.length ? (isSave = true) : (isSave = false);
       return {
         postId: post.postId,
         nickname: post.User.nickname,
@@ -19,6 +20,7 @@ class PostService {
         createdAt: post.createdAt,
         updatedAt: post.updatedAt,
         img: post.postImg,
+        isSave: isSave
       };
     });
   };
