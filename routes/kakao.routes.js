@@ -28,12 +28,12 @@ const kakaoCallback = (req, res, next) => {
           { expiresIn: "5h" }
         );
 
-        await User.update({ refreshToken }, { where: { userId: userId } });
+        // await User.update({ refreshToken }, { where: { userId: userId } });
 
         res.cookie("refreshToken", refreshToken);
         res.cookie("accessToken", accessToken);
 
-        result = { userKey, accessToken, refreshToken, nickname };
+        result = { userId, accessToken, refreshToken, nickname };
         res.status(201).json({
           user: result,
           msg: "카카오 로그인에 성공하였습니다.",

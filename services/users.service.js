@@ -55,7 +55,7 @@ class UserService {
       expiresIn: "7d",
     });
 
-    return { accessToken, refreshToken };
+    return { accessToken, refreshToken, userId };
   };
 
   profile = async (userId) => {
