@@ -54,7 +54,7 @@ class PostsController {
 
       const findPost = await this.postService.findAuthor(postId);
       const findkey = findPost.postImg.split("/")[4];
-      const keyinfo = `posts-image/${findkey}`
+      const keyinfo = `posts-image/${findkey}`;
       console.log(findkey);
       // console.log("aaaaaaaaaaaaa");
       // console.log(findPost.userId);

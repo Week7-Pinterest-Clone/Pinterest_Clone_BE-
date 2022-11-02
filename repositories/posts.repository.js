@@ -19,6 +19,9 @@ class PostRepository {
           model: User,
         },
         {
+          model: Save,
+        },
+        {
           model: Comment,
           include: [
             { model: User },

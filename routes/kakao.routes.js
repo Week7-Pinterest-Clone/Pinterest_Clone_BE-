@@ -11,7 +11,7 @@ const kakaoCallback = (req, res, next) => {
     console.log("test");
     passport.authenticate(
       "kakao",
-      { failureRedirect: "/login" }, // 실패하면 '/user/login''로 돌아감.
+      { failureRedirect: "/main" }, // 실패하면 '/main'으로 돌아감.
       async (err, user, info) => {
         if (err) return next(err);
 
