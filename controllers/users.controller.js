@@ -49,17 +49,15 @@ class UsersController {
         throw new InvalidParamsError("입력란을 확인해주세요");
       }
 
-      const { accessToken, refreshToken } = await this.userService.verifyUser(
-        email,
-        password
-      );
+      const { accessToken, refreshToken, userId } =
+        await this.userService.verifyUser(email, password);
       /**쿠키에 Token전송 */
       res.cookie("refreshToken", refreshToken);
       res.cookie("accessToken", accessToken);
 
       return res
         .status(200)
-        .json({ accessToken, refreshToken, message: "로그인 성공." });
+        .json({ accessToken, refreshToken, userId, message: "로그인 성공." });
     } catch (error) {
       next(error);
     }
@@ -68,6 +66,10 @@ class UsersController {
   profile = async (req, res, next) => {
     try {
       const { userId } = req.params;
+      //const Id = res.locals.user.userId;
+
+      //if (Id == userId) {
+      //}
       const profile = await this.userService.profile(userId);
 
       res.status(200).json(profile);

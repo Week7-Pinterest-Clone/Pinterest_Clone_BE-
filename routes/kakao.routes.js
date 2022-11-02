@@ -11,7 +11,7 @@ const kakaoCallback = (req, res, next) => {
     console.log("test");
     passport.authenticate(
       "kakao",
-      { failureRedirect: "/login" }, // 실패하면 '/user/login''로 돌아감.
+      { failureRedirect: "/main" }, // 실패하면 '/main'으로 돌아감.
       async (err, user, info) => {
         if (err) return next(err);
 
@@ -28,12 +28,12 @@ const kakaoCallback = (req, res, next) => {
           { expiresIn: "5h" }
         );
 
-        await User.update({ refreshToken }, { where: { userId: userId } });
+        // await User.update({ refreshToken }, { where: { userId: userId } });
 
         res.cookie("refreshToken", refreshToken);
         res.cookie("accessToken", accessToken);
 
-        result = { userKey, accessToken, refreshToken, nickname };
+        result = { userId, accessToken, refreshToken, nickname };
         res.status(201).json({
           user: result,
           msg: "카카오 로그인에 성공하였습니다.",
