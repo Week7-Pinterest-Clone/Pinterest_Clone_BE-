@@ -28,6 +28,8 @@ class PostService {
     const postsOne = await this.postRepository.findOnePost(postId, userId);
     const commentArray = postsOne.Comments;
     const userData = await this.userRepository.findById(userId);
+    let isSave;
+    postsOne.Saves.length ? (isSave = true) : (isSave = false);
     const commentData = commentArray.map((x) => {
       let boolean;
 
@@ -53,6 +55,7 @@ class PostService {
       myprofile: userData.userImg, //로그인유저 프로필
       createdAt: postsOne.createdAt,
       updatedAt: postsOne.updatedAt,
+      isSave: isSave,
       comment: commentData,
     };
   };
