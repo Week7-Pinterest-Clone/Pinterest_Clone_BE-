@@ -5,6 +5,7 @@ const like = require("../models/like");
 class LikeController {
   likeService = new LikeService();
 
+  /**좋아요 토글 컨트롤러(좋아요등록,삭제) */
   liketoggle = async (req, res, next) => {
     try {
       const { userId } = res.locals.user;

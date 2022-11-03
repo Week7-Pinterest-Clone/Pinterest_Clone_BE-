@@ -63,6 +63,7 @@ class UsersController {
     }
   };
 
+  /**유저프로필 조회 */
   profile = async (req, res, next) => {
     try {
       const { userId } = req.params;
@@ -78,6 +79,7 @@ class UsersController {
     }
   };
 
+  /**프로필 수정페이지 */
   profileUpdatePage = async (req, res, next) => {
     try {
       const { userId } = req.params;

@@ -3,13 +3,9 @@ require("dotenv").config();
 // 로그인 되어 있는 유저일 경우 Error를 반환한다.
 module.exports = (req, res, next) => {
   try {
-    if (!req.headers.auth) {
-      return next();
-    }
+    const { accesstoken, refreshtoken } = req.headers;
 
-    const { accessToken, refreshToken } = req.headers.auth;
-
-    if (accessToken || refreshToken) {
+    if (accesstoken || refreshtoken) {
       return res.status(403).send({
         errorMessage: "이미 로그인이 되어있습니다.",
       });

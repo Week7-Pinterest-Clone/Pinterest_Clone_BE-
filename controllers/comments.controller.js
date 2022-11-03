@@ -3,6 +3,7 @@ const InvalidParamsError = require("../exceptions/index.exception");
 class CommentController {
   commentService = new CommentService();
 
+  /**댓글 작성 컨트롤러 */
   createComment = async (req, res, next) => {
     try {
       const { comment } = req.body;
@@ -19,6 +20,7 @@ class CommentController {
     }
   };
 
+  /**댓글 수정 컨트롤러 */
   updateComment = async (req, res, next) => {
     try {
       const { commentId } = req.params;
@@ -38,6 +40,7 @@ class CommentController {
     }
   };
 
+  /**댓글 삭제 컨트롤러 */
   deleteComment = async (req, res, next) => {
     try {
       const { commentId } = req.params;
