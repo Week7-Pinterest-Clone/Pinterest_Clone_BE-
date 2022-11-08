@@ -55,18 +55,20 @@ class UserService {
       expiresIn: "7d",
     });
 
-    return { accessToken, refreshToken };
+    return { accessToken, refreshToken, userId };
   };
 
   profile = async (userId) => {
     const user = await this.userRepository.findById(userId);
-
-    const posts = user.Saves.map((x) => {
+    let posts;
+    if (!user) {
+      throw new ValidationError("존재하지 않는 유저 입니다.");
+    }
+    posts = user.Saves.map((x) => {
       return {
         postId: x.Post.postId,
         userId: x.Post.userId,
         title: x.Post.title,
-        content: x.Post.content,
         postImg: x.Post.postImg,
         isSave: true,
         createdAt: x.Post.createdAt,
@@ -77,6 +79,7 @@ class UserService {
     return {
       nickname: user.nickname,
       email: user.email,
+      content: user.introduce,
       avatar: user.userImg,
       post: posts,
     };

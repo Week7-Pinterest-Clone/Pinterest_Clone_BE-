@@ -1,7 +1,8 @@
 require("dotenv").config();
 const passport = require("passport");
 const KaKaoStrategy = require("passport-kakao").Strategy;
-const { Users } = require("../models");
+const { User } = require("../models");
+require("dotenv").config();
 
 module.exports = () => {
   passport.use(
@@ -17,8 +18,9 @@ module.exports = () => {
       // profile: 카카오가 보내준 유저 정보. profile의 정보를 바탕으로 회원가입
       async (accessToken, refreshToken, profile, done) => {
         try {
+          console.log(profile);
           const email = profile._json.kakao_account.email;
-          const exUser = await Users.findOne({
+          const exUser = await User.findOne({
             where: { snsId: profile.id, provider: "kakao" },
           });
 
@@ -26,11 +28,11 @@ module.exports = () => {
             done(null, exUser);
             console.log(exUser, "카카오 로그인 성공!");
           } else {
-            const newUser = await Users.create({
+            const newUser = await User.create({
               nickname: profile.username,
-              snsId: profile.id,
-              provider: "kakao",
               email: email,
+              provider: "kakao",
+              snsId: profile.id,
             });
             done(null, newUser);
           }

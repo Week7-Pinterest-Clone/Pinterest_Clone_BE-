@@ -1,11 +1,11 @@
-const { Post, User, Save, Comment, Like } = require("../models");
-const user = require("../models/user");
+const { Post, User, Save, Comment, Like } = require('../models');
+const user = require('../models/user');
 
 class PostRepository {
   //게시글전체조회
   findAllPost = async () => {
     const allPost = await Post.findAll({
-      include: { model: User },
+      include: [{ model: User }, { model: Save }],
     });
 
     return allPost;
@@ -17,6 +17,9 @@ class PostRepository {
       include: [
         {
           model: User,
+        },
+        {
+          model: Save,
         },
         {
           model: Comment,
